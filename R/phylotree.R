@@ -70,16 +70,30 @@ phylotree_html <- function(id, style, class, width, height, ...) {
         class=class,
         HTML(sprintf("<svg width=%s height=%s id='treeplot'></svg>", width, height))),
 
-      # Select box for Layout
+      # Controls
       tags$div(
-        id = sprintf("%s-layout", id),
-        style=style,
-        class=class,
+        tags$h4("Layout"),
         HTML(sprintf(
           '<select id="layout">
 		          <option value="rect">rectangular</option>
               <option value="radial">radial</option>
               <option value="unrooted">unrooted</option>
               <option value="clock">clock</option>
-         </select>'))))
+         </select>')),
+
+        tags$h4("Distance"),
+        HTML(sprintf(
+          '	<select id="distance">
+	            <option value="div">divergence</option>
+              <option value="num_date">time</option>
+              <option value="level">level</option>
+         </select>'))),
+
+        tags$h4("View Changes"),
+        tags$div(
+          HTML(sprintf('<button id="size">Random Size</button>')),
+          HTML(sprintf('<button id="color">Random Color</button>')),
+          HTML(sprintf('<button id="both">Random Both</button>')),
+          HTML(sprintf('<button id="reset">Reset View</button>')))
+      )
   }
