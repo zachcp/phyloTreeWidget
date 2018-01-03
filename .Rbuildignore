@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^javascript$
+^package\.json$
+^node_modules$

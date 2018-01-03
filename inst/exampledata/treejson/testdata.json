@@ -1,0 +1,56 @@
+{
+ "strain": "NODE_000000",
+ "branch_length": 0.01,
+ "node": "NODE_000000",
+ "children": [
+  {
+   "strain": "A",
+   "branch_length": 0.01,
+   "name": "A",
+   "kind": "AA",
+   "lat": 10
+  },
+  {
+   "strain": "NODE_000002",
+   "branch_length": 0.01,
+   "node": "NODE_000002",
+   "children": [
+    {
+     "strain": "B",
+     "branch_length": 0.01,
+     "name": "B",
+     "kind": "BA",
+     "lat": 11
+    },
+    {
+     "strain": "C",
+     "branch_length": 0.01,
+     "name": "C",
+     "kind": "CA",
+     "lat": 12
+    }
+   ]
+  },
+  {
+   "strain": "NODE_000005",
+   "branch_length": 0.01,
+   "node": "NODE_000005",
+   "children": [
+    {
+     "strain": "D",
+     "branch_length": 0.01,
+     "name": "D",
+     "kind": "DA",
+     "lat": 13
+    },
+    {
+     "strain": "E",
+     "branch_length": 0.01,
+     "name": "E",
+     "kind": "EA",
+     "lat": 14
+    }
+   ]
+  }
+ ]
+}
