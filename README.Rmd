@@ -31,4 +31,26 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 ## basic example code
 phylotree("Booyah! I plot the Zika TREE!")
+phylotree("Booyah! I plot the Zika TREE!", width=300, height=300)
+```
+
+```{r}
+
+tree <- ape::read.tree(text="(A, (B, C), (D, E), F);")
+data <- data.frame(
+  node = c("A", "B", "C", "D", "E", "F"),
+  lat = c(10,11,12,13,14, 15),
+  kind = c("AA", "BA", "CA", "DA", "EA", "FA"))
+
+json1 <- process_tree(tree, data, python="/Users/zach/anaconda3/bin/python")
+
+phylotree(tree, data, python="/Users/zach/anaconda3/bin/python")
+
+```
+
+```{r}
+library(ape)
+data("bird.families")
+bird.families
+phylotree(tree=bird.families, data=NULL, python="/Users/zach/anaconda3/bin/python")
 ```
