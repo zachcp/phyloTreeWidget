@@ -128,7 +128,7 @@ HTMLWidgets.widget({
         zoomClade(myTree.nodes[0]);
      });
 
-    d3.select("#treeplot").on("dblclick", function(){
+    d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
         console.log("zoom");
         phyloTree.zoomIn(myTree, 1.4,  700);
     });
