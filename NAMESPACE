@@ -2,6 +2,10 @@
 
 export(phylotree)
 export(phylotreeOutput)
+export(process_tree)
 export(renderPhylotree)
 import(htmltools)
 import(htmlwidgets)
+importFrom(ape,read.tree)
+importFrom(ape,write.tree)
+importFrom(jsonlite,read_json)
