@@ -9,19 +9,15 @@
 phylotree <- function(tree, data=NULL, python="python", width = NULL, height = NULL, elementId = NULL) {
 
   treejson <- process_tree(tree, data, python)
-  
-  # #
-  # library(jsonlite)
-  # zikatree   <- system.file("exampledata/treejson/zika_tree.json",
-  #                         package="phylotree")
-  # 
-  # zikajson <- jsonlite::read_json(zikatree)
-  #jsonlite::write_json(zikajson)
 
-  
+  # named list of color HEX values
+  colors   <- create_colormaps(data)
+  print(colors)
+
   # forward options using x
   params = list(
-    message = message,
+    message  = message,
+    colors   = colors,
     treejson = treejson
   )
 
@@ -77,20 +73,26 @@ phylotree_html <- function(id, style, class, width, height, ...) {
       tags$div(
         tags$h4("Layout"),
         HTML(sprintf(
-          '<select id="layout">
+          '<select id="%s-layout">
 		          <option value="rect">rectangular</option>
               <option value="radial">radial</option>
               <option value="unrooted">unrooted</option>
               <option value="clock">clock</option>
-         </select>')),
+         </select>', id)),
 
         tags$h4("Distance"),
         HTML(sprintf(
-          '	<select id="distance">
+          '	<select id="%s-distance">
 	            <option value="div">divergence</option>
               <option value="num_date">time</option>
               <option value="level">level</option>
-         </select>'))),
+         </select>', id))),
+
+      tags$h4("Color-By"),
+      HTML(sprintf(
+        '<select id="%s-colorby">
+
+        </select>', id)),
 
         tags$h4("View Changes"),
         tags$div(
