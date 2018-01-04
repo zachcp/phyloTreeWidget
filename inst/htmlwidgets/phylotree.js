@@ -28,8 +28,6 @@ HTMLWidgets.widget({
     treedata     = params.treejson;
     gparams      = params;
 
-    var treeplot = d3.select("#" + el.id + "-treeplot");
-
     // support fns
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
@@ -46,6 +44,7 @@ HTMLWidgets.widget({
 
 
     // main fn
+    var treeplot = d3.select("#" + el.id + "-treeplot");
   	myTree = phyloTree.phyloTree(
   		treedata,
   		{svg:treeplot,
@@ -60,7 +59,6 @@ HTMLWidgets.widget({
   	fulltree = myTree;
 
 
-
     // All the D3 select functions here
   	 d3.select("#" + el.id + "-layout").on("change", function(){
       var layout = document.getElementById(el.id + "-layout").value;
@@ -72,14 +70,6 @@ HTMLWidgets.widget({
       var distance = document.getElementById( el.id + "-distance").value;
       phyloTree.changeDistance(myTree, 1000, distance);
       console.log(myTree);
-      });
-
-    d3.select("#size").on("click", function(){
-        myTree.tips.forEach(function(d,i){
-            d.tipAttributes.r = (dummy+i)%8+2;
-        });
-        dummy++;
-        phyloTree.updateTipAttribute(myTree, 'r', 1000);
       });
 
     d3.select("#" + el.id + "-colorby").on("click", function(){
@@ -101,7 +91,7 @@ HTMLWidgets.widget({
               d.branchAttributes.stroke = d.tipAttributes.stroke;
           }else{
               d.branchAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
-              //d.branchAttributes["stroke-width"] = 3+i%7;
+              d.branchAttributes["stroke-width"] = 1+i%7;
           }
       });
       dummy++;
@@ -110,7 +100,14 @@ HTMLWidgets.widget({
       console.log(myTree);
        });
 
-   d3.select("#both").on("click", function(){
+    d3.select("#" + el.id + "-size").on("click", function(){
+        myTree.tips.forEach(function(d,i){ d.tipAttributes.r = (dummy+i)%8+2; });
+        dummy++;
+        phyloTree.updateTipAttribute(myTree, 'r', 1000);
+      });
+
+    d3.select("#" + el.id + "-both").on("click", function(){
+
        myTree.tips.forEach(function(d,i){
           d.tipAttributes.fill = colors[(dummy+i)%10];
           d.tipAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
@@ -124,7 +121,7 @@ HTMLWidgets.widget({
         console.log(myTree)
       });
 
-    d3.select("#reset").on("click", function(){
+    d3.select("#" + el.id + "-reset").on("click", function(){
         zoomClade(myTree.nodes[0]);
      });
 

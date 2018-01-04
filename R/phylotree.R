@@ -93,9 +93,9 @@ phylotree_html <- function(id, style, class, width, height, ...) {
 
         tags$h4("View Changes"),
         tags$div(
-          HTML(sprintf('<button id="size">Random Size</button>')),
-          HTML(sprintf('<button id="color">Random Color</button>')),
-          HTML(sprintf('<button id="both">Random Both</button>')),
-          HTML(sprintf('<button id="reset">Reset View</button>')))
+          HTML(sprintf('<button id="%s-size">Random Size</button>',   id)),
+          HTML(sprintf('<button id="%s-color">Random Color</button>', id)),
+          HTML(sprintf('<button id="%s-both">Random Both</button>',   id)),
+          HTML(sprintf('<button id="%s-reset">Reset View</button>',   id)))
       )
   }
