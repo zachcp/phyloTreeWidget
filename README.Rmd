@@ -52,5 +52,12 @@ phylotree(tree, data, python="/Users/zach/anaconda3/bin/python")
 library(ape)
 data("bird.families")
 bird.families
-phylotree(tree=bird.families, data=NULL, python="/Users/zach/anaconda3/bin/python")
+birddata <- data.frame(
+  node = bird.families$tip.label,
+  col1 = sample(1:5, length(bird.families$tip.label), replace=T),
+  col2 = sample(1:20, length(bird.families$tip.label), replace=T),
+  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T)
+)
+create_colormaps(birddata)
+phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
 ```
