@@ -11,7 +11,7 @@
 #'   R( tree + df ) -> R (JSON) -> HTMLWidget
 #'
 #'  But this will take some time. Initial focus are on features. However,
-#'  this dance requires that pythin is on your PATH and that you have the
+#'  this dance requires that python is on your PATH and that you have the
 #'  following libraries installed: click, biopython, pandas.
 #'
 #'
@@ -30,8 +30,6 @@ process_tree <- function(tree, data, python="python") {
   datatemp <- paste0(wd, "/data.txt")
   jsontemp <- paste0(wd, "/tree.json")
 
-  print(tree)
-  print(data)
   ape::write.tree(tree, file = treetemp)
   write.table(data, file = datatemp, sep="\t", row.names=FALSE, quote=FALSE)
 

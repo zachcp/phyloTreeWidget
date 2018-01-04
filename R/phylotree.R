@@ -89,10 +89,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
          </select>', id))),
 
       tags$h4("Color-By"),
-      HTML(sprintf(
-        '<select id="%s-colorby">
-
-        </select>', id)),
+      HTML(sprintf( '<select id="%s-colorby">  </select>', id)),
 
         tags$h4("View Changes"),
         tags$div(

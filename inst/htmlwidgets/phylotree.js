@@ -46,6 +46,7 @@ HTMLWidgets.widget({
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
 
+
     // main fn
   	myTree = phyloTree.phyloTree(
   		treedata,
@@ -63,15 +64,14 @@ HTMLWidgets.widget({
 
 
     // All the D3 select functions here
-  	 d3.select("#layout").on("change", function(){
-      var layout = document.getElementById("layout").value;
-      //myTree.dimensions.height=500;
+  	 d3.select("#" + el.id + "-layout").on("change", function(){
+      var layout = document.getElementById(el.id + "-layout").value;
       phyloTree.changeLayout(myTree, 1000, layout);
   	 });
 
 
-  	d3.select("#distance").on("change", function(){
-      var distance = document.getElementById("distance").value;
+  	d3.select("#" + el.id + "-distance").on("change", function(){
+      var distance = document.getElementById( el.id + "-distance").value;
       phyloTree.changeDistance(myTree, 1000, distance);
       console.log(myTree);
       });
@@ -84,16 +84,26 @@ HTMLWidgets.widget({
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
       });
 
-    d3.select("#color").on("click", function(){
+    d3.select("#" + el.id + "-colorby").on("click", function(){
+      var colval = document.getElementById(el.id + "-colorby").value;
+      console.log(colval);
       phyloTree.removeLabels(myTree);
       myTree.nodes.forEach(function(d,i){
           if (d.terminal){
-              d.tipAttributes.fill = colors[(dummy+i)%10];
-              d.tipAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
+
+              // get the tipAttribute value for the tip then
+              // lookup and set
+              //console.log(d3.keys(d.tipAttributes))
+              tipcolvar = d.n[colval] //tip data held under the 'n' field
+              //console.log(tipcolvar)
+              tipcol    = colors[colval][tipcolvar][0] // note this is fragile and depends on the color input model
+              //console.log(tipcol)
+              d.tipAttributes.fill = tipcol;
+              d.tipAttributes.stroke = d3.rgb(tipcol).darker();
               d.branchAttributes.stroke = d.tipAttributes.stroke;
           }else{
               d.branchAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
-              d.branchAttributes["stroke-width"] = 3+i%7;
+              //d.branchAttributes["stroke-width"] = 3+i%7;
           }
       });
       dummy++;
@@ -113,6 +123,7 @@ HTMLWidgets.widget({
         dummy++;
         phyloTree.updateTips(myTree, ['r'], ['fill', 'stroke'], 1000);
         phyloTree.updateBranchStyle(myTree, 'stroke', 1000);
+        console.log(myTree)
       });
 
     d3.select("#reset").on("click", function(){
