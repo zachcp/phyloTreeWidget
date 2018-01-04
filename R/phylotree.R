@@ -6,20 +6,23 @@
 #' @import htmltools
 #'
 #' @export
-phylotree <- function(message, width = NULL, height = NULL, elementId = NULL) {
+phylotree <- function(tree, data=NULL, python="python", width = NULL, height = NULL, elementId = NULL) {
 
-  #
-  library(jsonlite)
-  zikatree   <- system.file("exampledata/treejson/zika_tree.json",
-                          package="phylotree")
-
-  zikajson <- jsonlite::read_json(zikatree)
+  treejson <- process_tree(tree, data, python)
+  
+  # #
+  # library(jsonlite)
+  # zikatree   <- system.file("exampledata/treejson/zika_tree.json",
+  #                         package="phylotree")
+  # 
+  # zikajson <- jsonlite::read_json(zikatree)
   #jsonlite::write_json(zikajson)
 
+  
   # forward options using x
   params = list(
     message = message,
-    zika = zikajson
+    treejson = treejson
   )
 
   # create widget

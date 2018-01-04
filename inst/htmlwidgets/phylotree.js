@@ -14,7 +14,7 @@ HTMLWidgets.widget({
 
       renderValue: function(params) {
 
-        treedata = params.zika
+        treedata = params.treejson
         var treeplot = d3.select("#treeplot");
 
         var myTree;

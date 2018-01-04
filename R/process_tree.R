@@ -9,15 +9,15 @@ process_tree <- function(tree, data, python="python") {
   
   #intermediate files will be run in temp if no output is sent, andl lets cleaup the tempdir when we are done.
   wd <- tempdir()
-  #on.exit(unlink(list.files(wd)))
+  on.exit(unlink(list.files(wd)))
   
   
-  tree <- ape::read.tree(text="(A, (B, C), (D, E), F);")
-  data <- data.frame(
-    node = c("A", "B", "C", "D", "E", "F"),
-    lat = c(10,11,12,13,14, 15),
-    kind = c("AA", "BA", "CA", "DA", "EA", "FA"))
-  
+  # tree <- ape::read.tree(text="(A, (B, C), (D, E), F);")
+  # data <- data.frame(
+  #   node = c("A", "B", "C", "D", "E", "F"),
+  #   lat = c(10,11,12,13,14, 15),
+  #   kind = c("AA", "BA", "CA", "DA", "EA", "FA"))
+
   treetemp <- paste0(wd, "/tree.nw")
   datatemp <- paste0(wd, "/data.txt")
   jsontemp <- paste0(wd, "/tree.json")
