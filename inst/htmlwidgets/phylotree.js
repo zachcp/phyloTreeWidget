@@ -1,4 +1,7 @@
-var treedata, fulltree, gparams;
+// These vars are accessibel in the browser
+// everything in the HTMLWidget is scoped
+var fulltree, gparams;
+
 
 HTMLWidgets.widget({
 
@@ -17,11 +20,6 @@ HTMLWidgets.widget({
 
 
   drawGraphic: function(el, params, width, height) {
-  //factory: function(el, width, height) {
-
-    // TODO: define shared variables for this instance
-    console.log(el.name);
-    console.log(el.id);
 
     // setup vars
     var myTree;
@@ -30,7 +28,7 @@ HTMLWidgets.widget({
     treedata     = params.treejson;
     gparams      = params;
 
-    var treeplot = d3.select("#treeplot");
+    var treeplot = d3.select("#" + el.id + "-treeplot");
 
     // support fns
     const zoomClade = function(d){

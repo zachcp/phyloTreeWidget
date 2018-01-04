@@ -67,7 +67,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
         id = id,
         style=style,
         class=class,
-        HTML(sprintf("<svg width=%s height=%s id='treeplot'></svg>", width, height))),
+        HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>", width, height, id))),
 
       # Controls
       tags$div(
