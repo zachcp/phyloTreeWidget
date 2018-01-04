@@ -1,26 +1,16 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+phylotree
+=========
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-"
-)
-```
-# phylotree
+The goal of phylotree is to provide an R interface to the phyloTree JS library in order to make beautiful, interactive trees from any standard data source.
 
-The goal of phylotree is to provide an R interface to the phyloTree JS library in 
-order to make beautiful, interactive trees from any standard data source.
-
-## Installation
+Installation
+------------
 
 You can install phylotree from github with:
 
-```{r gh-installation, eval = FALSE}
+``` r
 # install.packages("devtools")
 devtools::install_github("zachcp/phyloTreeWidget")
 
@@ -28,11 +18,12 @@ devtools::install_github("zachcp/phyloTreeWidget")
 # libraries installed: click, biopython, pandas
 ```
 
-## Example
+Example
+-------
 
 This is a basic example which shows you how to generate a tree with data from ape.
 
-```{r, eval=FALSE}
+``` r
 library(ape)
 data("bird.families")
 
@@ -57,6 +48,4 @@ phylotree(tree=bird.families, data=birddata)
 phylotree(tree=bird.families, data=birddata, width=500, height=500)
 ```
 
-![](phyloTreeWidget1.png)
-![](phyloTreeWidget2.png)
-![](phyloTreeWidget3.png)
+![](phyloTreeWidget1.png) ![](phyloTreeWidget2.png) ![](phyloTreeWidget3.png)
