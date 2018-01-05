@@ -6,21 +6,35 @@
 
 
 // add modal processing function
-var addDataToModal = function(node, modaltitleclass="") {
+var addDataToModal = function(node, excludes=["parent"]) {
 
   // update title with Node ID
-  d3.select(".modal-card-title").text("New Text!")
+  d3.select(".modal-card-title").text(node.n.name);
 
   // update Body with Node information
   var modalbody = document.getElementsByClassName("modal-card-body")[0];
 
-  for (nodekey in d3.keys(node.n)){
+  var nodekeys = d3.keys(node.n);
+
+  nodekeys.forEach(function(nodekey) {
+
+    if (nodekey in excludes) {
+      console.log("Excluding: " + nodekey)
+      return
+    }
+
+    console.log("NOT Excluding: " + nodekey)
     console.log(nodekey)
-    keycontent = document.createTextNode(nodekey);
-    modalbody.appendChild(keycontent)
-    valcontent = document.createTextNode(node.n[nodekey]);
-    modalbody.appendChild(valcontent)
-  }
+    content = document.createTextNode(nodekey + ": " + node.n[nodekey]);
+    modalbody.appendChild(content);
+    modalbody.appendChild(document.createElement("br"));
+
+
+    // valcontent = document.createTextNode(node.n[nodekey]);
+    // modalbody.appendChild(valcontent)
+    // modalbody.appendChild(document.createElement("hr"));
+
+  });
 
   // Make Node Visible
   d3.select('.modal').attr("class", "modal is-active")
