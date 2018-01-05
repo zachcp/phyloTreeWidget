@@ -20,9 +20,9 @@ phylotree <- function(tree,
                       tipRadius=4.0,
                       tipStroke="#555",
                       tipFill="#555",
-                      tipStrokeWidth=2.0,
+                      tipStrokeWidth=4.0,
                       branchStroke="#555",
-                      branchStrokeWidth=2.0,
+                      branchStrokeWidth=4.0,
                       autoTipSize=TRUE,
                       python="python",
                       width = NULL,
@@ -97,55 +97,79 @@ renderPhylotree <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 
+
+######################################################
+## HTML Helpers
+##
+
+layout_control <- function(id) {
+  div(class="field",
+      tags$h4("Layout"),
+        div(class="select is-small",
+          HTML(sprintf(
+            '<select id="%s-layout">
+            <option value="rect">rectangular</option>
+            <option value="radial">radial</option>
+            <option value="unrooted">unrooted</option>
+            <option value="clock">clock</option>
+      </select>', id))))
+}
+
+distance_control <- function(id) {
+  div(class="field",
+      tags$h4("Distance"),
+      div(class="select is-small",
+          HTML(sprintf(
+            '	<select id="%s-distance">
+            <option value="div">divergence</option>
+            <option value="num_date">time</option>
+            <option value="level">level</option>
+            </select>', id))))
+}
+
+color_control <- function(id) {
+  div(class="control",
+      tags$h4("Color"),
+      div(class="select is-small",
+          HTML(sprintf('<select id="%s-colorby"> </select>', id))))
+
+}
+
 phylotree_html <- function(id, style, class, width, height, ...) {
-    list(
-      div(
-        id = id,
-        style=style,
-        class=class,
-        HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>", width, height, id))),
+  list(
+    tags$nav()
+  )
+  div(id = id,
+      style=style,
+      class=class,
+      div(class="container is-widescreen",
+          div(class="level",
+            # Controls
+            layout_control(id=id),
+            distance_control(id=id),
+            color_control(id=id),
 
-      # Controls
-      div(
-        tags$h4("Layout"),
-        HTML(sprintf(
-          '<select id="%s-layout">
-		          <option value="rect">rectangular</option>
-              <option value="radial">radial</option>
-              <option value="unrooted">unrooted</option>
-              <option value="clock">clock</option>
-         </select>', id)),
+            tags$h4("View Changes"),
+            div(
+              HTML(sprintf('<button id="%s-size">Random Size</button>',   id)),
+              HTML(sprintf('<button id="%s-color">Random Color</button>', id)),
+              HTML(sprintf('<button id="%s-both">Random Both</button>',   id)),
+              HTML(sprintf('<button id="%s-reset">Reset View</button>',   id)))),
 
-        tags$h4("Distance"),
-        HTML(sprintf(
-          '	<select id="%s-distance">
-              <option value="div">divergence</option>
-              <option value="num_date">time</option>
-              <option value="level">level</option>
-         </select>', id))),
+            # Tree SVG
+            HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
+                         width, height, id)),
 
-      tags$h4("Color-By"),
-      HTML(sprintf( '<select id="%s-colorby">  </select>', id)),
-
-      tags$h4("View Changes"),
-      div(
-        HTML(sprintf('<button id="%s-size">Random Size</button>',   id)),
-        HTML(sprintf('<button id="%s-color">Random Color</button>', id)),
-        HTML(sprintf('<button id="%s-both">Random Both</button>',   id)),
-        HTML(sprintf('<button id="%s-reset">Reset View</button>',   id))),
-
-      # modal div using a Card Format
-      div(class="modal",
-          div(class="modal-background"),
-          div(class="modal-card",
-              tags$header(class="modal-card-head",
-                # add title here
-                HTML(sprintf('<p class="modal-card-title">Modal title</p>')),
-                HTML(sprintf('<button class="delete modal-close" aria-label="close"></button>'))),
-
-              tags$section(class="modal-card-body"))
-      )
-      )
+            # modal div using a Card Format
+            div(class="modal",
+                div(class="modal-background"),
+                div(class="modal-card",
+                    tags$header(class="modal-card-head",
+                                # add title here
+                                HTML(sprintf('<p class="modal-card-title"></p>')),
+                                HTML(sprintf('<button class="delete modal-close" aria-label="close"></button>'))),
+                    tags$section(class="modal-card-body")))
+      ))
 }
 
 
