@@ -2,6 +2,8 @@
 #'
 #' create colormaps for dataframe columns
 #'
+#' @param df Required. A dataframe containing infornation about nodes in the tree.
+#' @param custommaps. Optional. Curently a stub. There needs to be a way to pass in custom colors.
 #' @importFrom colormap colormap_pal
 #'
 #' @export

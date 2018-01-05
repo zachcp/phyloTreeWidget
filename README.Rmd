@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 The goal of phylotree is to provide an R interface to the phyloTree JS library in 
 order to make beautiful, interactive trees from any standard data source.
 
+** NOTE: This is currently experimental and the datastructures and functions are likely to change**
+
 ## Installation
 
 You can install phylotree from github with:

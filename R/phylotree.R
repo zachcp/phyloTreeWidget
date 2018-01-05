@@ -63,14 +63,14 @@ renderPhylotree <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 phylotree_html <- function(id, style, class, width, height, ...) {
     list(
-      tags$div(
+      div(
         id = id,
         style=style,
         class=class,
         HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>", width, height, id))),
 
       # Controls
-      tags$div(
+      div(
         tags$h4("Layout"),
         HTML(sprintf(
           '<select id="%s-layout">
