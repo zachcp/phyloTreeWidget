@@ -23,10 +23,8 @@ HTMLWidgets.widget({
 
     // setup vars
     var myTree;
-    var dummy=0;
-    var colors   = params.colors;
-    treedata     = params.treejson;
-    gparams      = params;
+    var dummy = 0;
+    gparams = params;
 
     // support fns
     const zoomClade = function(d){
@@ -36,7 +34,7 @@ HTMLWidgets.widget({
     // setup dom
     d3.select("#" + el.id + "-colorby")
       .selectAll("option")
-      .data(d3.keys(colors))
+      .data(d3.keys(params.colors))
       .enter()
       .append("option")
       .text(function (d) { return d; })
@@ -46,15 +44,17 @@ HTMLWidgets.widget({
     // main fn
     var treeplot = d3.select("#" + el.id + "-treeplot");
   	myTree = phyloTree.phyloTree(
-  		treedata,
+  		params.treejson,
   		{svg:treeplot,
   		 margins:{top:10, bottom:10, left:10, right:10},
   		callbacks:{onBranchClick:zoomClade,
   					onBranchHover:function(d){console.log(d.n.strain);},
   					onBranchLeave:function(d){console.log(d.n.strain);},
   					onTipHover:function(d){console.log(d.n.strain);},
-  					onTipLeave:function(d){console.log(d.n.strain);}
-  	}});
+  					onTipLeave:function(d){console.log(d.n.strain);},
+  					onTipClick:function(d){addDataToModal(d)}
+  					}
+  	});
   	phyloTree.drawTree(myTree);
   	fulltree = myTree;
 
@@ -84,13 +84,13 @@ HTMLWidgets.widget({
               //console.log(d3.keys(d.tipAttributes))
               tipcolvar = d.n[colval] //tip data held under the 'n' field
               //console.log(tipcolvar)
-              tipcol    = colors[colval][tipcolvar][0] // note this is fragile and depends on the color input model
+              tipcol    = params.colors[colval][tipcolvar][0] // note this is fragile and depends on the color input model
               //console.log(tipcol)
               d.tipAttributes.fill = tipcol;
               d.tipAttributes.stroke = d3.rgb(tipcol).darker();
               d.branchAttributes.stroke = d.tipAttributes.stroke;
           }else{
-              d.branchAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
+              d.branchAttributes.stroke = d3.rgb(params.colors[(dummy+i)%10]).darker();
               d.branchAttributes["stroke-width"] = 1+i%7;
           }
       });
@@ -130,6 +130,20 @@ HTMLWidgets.widget({
         phyloTree.zoomIn(myTree, 1.4,  700);
     });
 
+
+    // Callbacks for the Modal
+    // add callbacks to close the modal
+    d3.select('.modal-close').on("click", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
+
+    d3.select('.modal-background').on("dblclick", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
+
+    d3.select('.modal').on("dblclick", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
   },
 
 });

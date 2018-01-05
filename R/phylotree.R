@@ -83,7 +83,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
         tags$h4("Distance"),
         HTML(sprintf(
           '	<select id="%s-distance">
-	            <option value="div">divergence</option>
+              <option value="div">divergence</option>
               <option value="num_date">time</option>
               <option value="level">level</option>
          </select>', id))),
@@ -91,11 +91,23 @@ phylotree_html <- function(id, style, class, width, height, ...) {
       tags$h4("Color-By"),
       HTML(sprintf( '<select id="%s-colorby">  </select>', id)),
 
-        tags$h4("View Changes"),
-        tags$div(
-          HTML(sprintf('<button id="%s-size">Random Size</button>',   id)),
-          HTML(sprintf('<button id="%s-color">Random Color</button>', id)),
-          HTML(sprintf('<button id="%s-both">Random Both</button>',   id)),
-          HTML(sprintf('<button id="%s-reset">Reset View</button>',   id)))
+      tags$h4("View Changes"),
+      div(
+        HTML(sprintf('<button id="%s-size">Random Size</button>',   id)),
+        HTML(sprintf('<button id="%s-color">Random Color</button>', id)),
+        HTML(sprintf('<button id="%s-both">Random Both</button>',   id)),
+        HTML(sprintf('<button id="%s-reset">Reset View</button>',   id))),
+
+      # modal div using a Card Format
+      div(class="modal",
+          div(class="modal-background"),
+          div(class="modal-card",
+              tags$header(class="modal-card-head",
+                # add title here
+                HTML(sprintf('<p class="modal-card-title">Modal title</p>')),
+                HTML(sprintf('<button class="delete modal-close" aria-label="close"></button>'))),
+
+              tags$section(class="modal-card-body"))
+      )
       )
   }
