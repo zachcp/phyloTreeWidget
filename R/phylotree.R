@@ -110,11 +110,11 @@ layout_control <- function(id) {
               div(class="select is-small",
                 HTML(sprintf(
                   '<select id="%s-layout">
-                  <option value="rect">rectangular</option>
-                  <option value="radial">radial</option>
-                  <option value="unrooted">unrooted</option>
-                  <option value="clock">clock</option>
-            </select>', id))))))
+                      <option value="radial">radial</option>
+                      <option value="rect">rectangular</option>
+                      <option value="unrooted">unrooted</option>
+                      <option value="clock">clock</option>
+                  </select>', id))))))
 }
 
 distance_control <- function(id) {
@@ -146,7 +146,7 @@ reset_control <- function(id) {
       div(class="field",
           tags$label("Reset"),
           div(class="control",
-              HTML(sprintf('<button id="%s-reset" class="button is-info">Reset View</button>', id)))))
+              HTML(sprintf('<button id="%s-reset" class="button is-info is-small">Reset View</button>', id)))))
 }
 
 #' This is the HTML Widget custom render html fn.
