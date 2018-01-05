@@ -22,18 +22,14 @@ create_colormaps <- function(df, custommaps=NULL) {
     # keep hex tag and 6 characters to ignore the alpha channel
     local_colors   <- as.character(Map(function(d){substr(d,1,7)}, local_colors))
     localcolorlist <- list()
-    #print(colvals)
+
     for (i in seq_along(colvals)) {
-      print(colvals[i])
-      #print(local_colors[i])
       localcolorlist[[colvals[i] ]] <- list(local_colors[i][])
     }
-    #print(localcolorlist)
+
     colmap[col]  <- list(localcolorlist)
   }
 
   return(colmap)
 }
 
-#json1 <- create_colormaps(birddata)
-#json1
