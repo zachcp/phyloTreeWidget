@@ -6,7 +6,7 @@
 
 
 // add modal processing function
-var addDataToModal = function(node, excludes=["parent"]) {
+var addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
 
   // update title with Node ID
   d3.select(".modal-card-title").text(node.n.name);
@@ -14,11 +14,14 @@ var addDataToModal = function(node, excludes=["parent"]) {
   // update Body with Node information
   var modalbody = document.getElementsByClassName("modal-card-body")[0];
 
-  var nodekeys = d3.keys(node.n);
+  // reset the body
+  modalbody.innerHTML = ""
 
+  // add the data to the modal
+  var nodekeys = d3.keys(node.n);
   nodekeys.forEach(function(nodekey) {
 
-    if (nodekey in excludes) {
+    if (excludes.includes(nodekey)) {
       console.log("Excluding: " + nodekey)
       return
     }
