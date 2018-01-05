@@ -46,8 +46,20 @@ HTMLWidgets.widget({
   	myTree = phyloTree.phyloTree(
   		params.treejson,
   		{svg:treeplot,
+  		 layout: params.layout,
+       distance: params.distance,
+       orientation: {x:params.orientation_x, y:params.orientation_y},
+       zoom: {x:params.zoomLevel_x, y:params.zoomLevel_y},
+       pan: {x:params.pan_x, y:params.pan_y},
+       tipRadius: params.tipRadius,
+       tipStroke:params.tipStroke,
+       tipFill:params.tipFill,
+       tipStrokeWidth: params.tipStrokeWidth,
+       branchStroke: params.branchStroke,
+       branchStrokeWidth: params.branchStrokeWidth,
+       autoTipSize: params.autoTipSize,
   		 margins:{top:10, bottom:10, left:10, right:10},
-  		callbacks:{onBranchClick:zoomClade,
+  	 	callbacks:{onBranchClick:zoomClade,
   					onBranchHover:function(d){console.log(d.n.strain);},
   					onBranchLeave:function(d){console.log(d.n.strain);},
   					onTipHover:function(d){console.log(d.n.strain);},
@@ -55,6 +67,8 @@ HTMLWidgets.widget({
   					onTipClick:function(d){addDataToModal(d)}
   					}
   	});
+
+
   	phyloTree.drawTree(myTree);
   	fulltree = myTree;
 

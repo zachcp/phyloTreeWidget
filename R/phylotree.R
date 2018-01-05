@@ -6,7 +6,28 @@
 #' @import htmltools
 #'
 #' @export
-phylotree <- function(tree, data=NULL, python="python", width = NULL, height = NULL, elementId = NULL) {
+phylotree <- function(tree,
+                      data=NULL,
+                      layout="radial",
+                      distance="div",
+                      orientation_x=1,
+                      orientation_y=1,
+                      #callbacks:{},  Still need to implement callbacks
+                      zoomLevel_x =1,
+                      zoomLevel_y =1,
+                      pan_x =0,
+                      pan_y =0,
+                      tipRadius=4.0,
+                      tipStroke="#555",
+                      tipFill="#555",
+                      tipStrokeWidth=2.0,
+                      branchStroke="#555",
+                      branchStrokeWidth=2.0,
+                      autoTipSize=TRUE,
+                      python="python",
+                      width = NULL,
+                      height = NULL,
+                      elementId = NULL) {
 
   treejson <- process_tree(tree, data, python)
 
@@ -16,9 +37,24 @@ phylotree <- function(tree, data=NULL, python="python", width = NULL, height = N
 
   # forward options using x
   params = list(
-    message  = message,
     colors   = colors,
-    treejson = treejson
+    treejson = treejson,
+    layout   = layout,
+    distance = distance,
+    orientation_x = orientation_x,
+    orientation_y = orientation_y,
+    #callbacks:{},  Still need to implement callbacks
+    zoomLevel_x = zoomLevel_x,
+    zoomLevel_y = zoomLevel_y,
+    pan_x = pan_x,
+    pan_y = pan_y,
+    tipRadius=tipRadius,
+    tipStroke=tipStroke,
+    tipFill=tipFill,
+    tipStrokeWidth=tipStrokeWidth,
+    branchStroke=branchStroke,
+    branchStroke=branchStroke,
+    autoTipSize=autoTipSize
   )
 
   # create widget
@@ -110,4 +146,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
               tags$section(class="modal-card-body"))
       )
       )
-  }
+}
+
+
+
