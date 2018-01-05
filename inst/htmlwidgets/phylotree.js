@@ -97,15 +97,15 @@ HTMLWidgets.widget({
               // lookup and set
               //console.log(d3.keys(d.tipAttributes))
               tipcolvar = d.n[colval] //tip data held under the 'n' field
-              //console.log(tipcolvar)
-              tipcol    = params.colors[colval][tipcolvar][0] // note this is fragile and depends on the color input model
-              //console.log(tipcol)
+              console.log(tipcolvar)
+              tipcol    = params.colors[colval][tipcolvar] // note this is fragile and depends on the color input model
+              console.log(tipcol)
               d.tipAttributes.fill = tipcol;
               d.tipAttributes.stroke = d3.rgb(tipcol).darker();
               d.branchAttributes.stroke = d.tipAttributes.stroke;
           }else{
               d.branchAttributes.stroke = d3.rgb(params.colors[(dummy+i)%10]).darker();
-              d.branchAttributes["stroke-width"] = 1+i%7;
+              //d.branchAttributes["stroke-width"] = 1+i%7;
           }
       });
       dummy++;

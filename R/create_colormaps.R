@@ -24,7 +24,7 @@ create_colormaps <- function(df, custommaps=NULL) {
     localcolorlist <- list()
 
     for (i in seq_along(colvals)) {
-      localcolorlist[[colvals[i] ]] <- list(local_colors[i][])
+      localcolorlist[[colvals[i] ]] <- local_colors[i]
     }
 
     colmap[col]  <- list(localcolorlist)
