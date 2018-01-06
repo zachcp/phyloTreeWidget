@@ -103,84 +103,97 @@ renderPhylotree <- function(expr, env = parent.frame(), quoted = FALSE) {
 ##
 
 layout_control <- function(id) {
-  div(class="navbar-item",
-    div(class="field",
-        tags$label("Layout"),
-          div(class="control",
-              div(class="select is-small",
-                HTML(sprintf(
-                  '<select id="%s-layout">
-                      <option value="radial">radial</option>
-                      <option value="rect">rectangular</option>
-                      <option value="unrooted">unrooted</option>
-                      <option value="clock">clock</option>
-                  </select>', id))))))
+  div(class="field",
+      tags$label("Layout"),
+      div(class="control",
+          div(class="select is-small",
+            HTML(sprintf(
+              '<select id="%s-layout">
+                  <option value="radial">radial</option>
+                  <option value="rect">rectangular</option>
+                  <option value="unrooted">unrooted</option>
+                  <option value="clock">clock</option>
+              </select>', id)))))
 }
 
 distance_control <- function(id) {
-  div(class="navbar-item",
-      div(class="field",
-          tags$label("Distance"),
-          div(class="control",
-              div(class="select is-small",
-                  HTML(sprintf(
-                    '	<select id="%s-distance">
-                    <option value="div">divergence</option>
-                    <option value="num_date">time</option>
-                    <option value="level">level</option>
-                    </select>', id))))))
+  div(class="field",
+      tags$label("Distance"),
+      div(class="control",
+          div(class="select is-small",
+              HTML(sprintf(
+                '	<select id="%s-distance">
+                <option value="div">divergence</option>
+                <option value="num_date">time</option>
+                <option value="level">level</option>
+              </select>', id)))))
 }
 
 
 color_control <- function(id) {
-  div(class="navbar-item",
-      div(class="field",
-          tags$label("Color"),
-          div(class="control",
-              div(class="select is-small",
-                  HTML(sprintf('<select id="%s-colorby"> </select>', id))))))
+  div(class="field",
+      tags$label("Color"),
+      div(class="control",
+          div(class="select is-small",
+              HTML(sprintf('<select id="%s-colorby"> </select>', id)))))
+}
+
+size_control <- function(id) {
+  div(class="field",
+      tags$label("Size"),
+      div(class="control",
+          div(class="select is-small",
+              HTML(sprintf('<select id="%s-sizeby"> </select>', id)))))
 }
 
 reset_control <- function(id) {
-  div(class="navbar-item",
-      div(class="field",
-          tags$label("Reset"),
-          div(class="control",
-              HTML(sprintf('<button id="%s-reset" class="button is-info is-small">Reset View</button>', id)))))
+  div(class="field",
+      tags$label("Reset"),
+      div(class="control",
+          HTML(sprintf('<button id="%s-reset" class="button is-info is-small">Reset View</button>', id))))
+}
+
+modal <- function() {
+  div(class="modal",
+      div(class="modal-background"),
+      div(class="modal-card",
+          tags$header(class="modal-card-head",
+                      # add title here
+                      HTML(sprintf('<p class="modal-card-title"></p>')),
+                      HTML(sprintf('<button class="delete modal-close" aria-label="close"></button>'))),
+          tags$section(class="modal-card-body")))
 }
 
 #' This is the HTML Widget custom render html fn.
 #'
 #'
 phylotree_html <- function(id, style, class, width, height, ...) {
-  list(
-    tags$nav()
-  )
   div(id = id,
       style=style,
       class=class,
+      
+      #svg and controls
       div(class="container is-widescreen",
-          tags$nav(class="navbar",
-            # Controls
-            layout_control(id=id),
-            distance_control(id=id),
-            color_control(id=id),
-            reset_control(id=id)),
+          div(class="columns",
+            div(class="column is-one-fifth",
+              tags$nav(class="nav",
+                # Controls
+                layout_control(id=id),
+                distance_control(id=id),
+                color_control(id=id),
+                size_control(id=id),
+                reset_control(id=id))),
+          
+            div(class="columns is-four-fifths",
+                # Tree SVG
+                HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
+                             width, height, id))))
+        ),
+      
+      #modal
+      modal()
 
-      # Tree SVG
-      HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
-                   width, height, id)),
-
-      # modal div using a Card Format
-      div(class="modal",
-          div(class="modal-background"),
-          div(class="modal-card",
-              tags$header(class="modal-card-head",
-                          # add title here
-                          HTML(sprintf('<p class="modal-card-title"></p>')),
-                          HTML(sprintf('<button class="delete modal-close" aria-label="close"></button>'))),
-              tags$section(class="modal-card-body")))
-      ))
+      )
 }
 
 
