@@ -33,11 +33,12 @@ phylotree <- function(tree,
 
   # named list of color HEX values
   colors   <- create_colormaps(data)
-  print(colors)
+  sizes    <- create_sizemaps(data)
 
   # forward options using x
   params = list(
     colors   = colors,
+    sizes    = sizes,
     treejson = treejson,
     layout   = layout,
     distance = distance,
@@ -177,7 +178,6 @@ modal <- function() {
 
 #' This is the HTML Widget custom render html fn.
 #'
-#'
 phylotree_html <- function(id, style, class, width, height, ...) {
   div(id = id,
       style=style,
@@ -194,20 +194,17 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       distance_control(id=id),
                       color_control(id=id),
                       size_control(id=id),
-                      reset_control(id=id)
-                )),
+                      reset_control(id=id))),
           
             div(class="column is-three-quarters",
                 # Tree SVG
                 HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
                              width, height, id)))
-            )
+          )
         ),
-      
       #modal
       modal()
-
-      )
+    )
 }
 
 

@@ -39,6 +39,15 @@ HTMLWidgets.widget({
       .append("option")
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
+    
+    d3.select("#" + el.id + "-sizeby")
+      .selectAll("option")
+      .data(d3.keys(params.sizes))
+      .enter()
+      .append("option")
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; });
+
 
 
     // main fn
@@ -114,11 +123,27 @@ HTMLWidgets.widget({
       console.log(myTree);
        });
 
-    d3.select("#" + el.id + "-size").on("click", function(){
-        myTree.tips.forEach(function(d,i){ d.tipAttributes.r = (dummy+i)%8+2; });
+    d3.select("#" + el.id + "-sizeby").on("click", function(){
+        // myTree.tips.forEach(function(d,i){ d.tipAttributes.r = (dummy+i)%8+2; });
+        // dummy++;
+        // phyloTree.updateTipAttribute(myTree, 'r', 1000);
+        var sizeval = document.getElementById(el.id + "-sizeby").value;
+        console.log(sizeval);
+        phyloTree.removeLabels(myTree);
+        myTree.nodes.forEach(function(d,i){
+            if (d.terminal){
+                // get the tipAttribute value for the tip then
+                tipsizevar = d.n[sizeval] //tip data held under the 'n' field
+                //console.log(tipsizevar)
+                d.tipAttributes.r = tipsizevar;
+            }
+        });
         dummy++;
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
-      });
+        //phyloTree.updateBranches(myTree, [], ['stroke', 'stroke-width'], 1000);
+        console.log(myTree);
+    });
+
 
     d3.select("#" + el.id + "-both").on("click", function(){
 
