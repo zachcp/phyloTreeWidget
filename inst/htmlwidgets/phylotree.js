@@ -24,7 +24,7 @@ HTMLWidgets.widget({
     // setup vars
     var myTree;
     var dummy = 0;
-    gparams = params;
+    gparams   = params;
 
     // support fns
     const zoomClade = function(d){
