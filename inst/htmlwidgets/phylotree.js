@@ -145,21 +145,6 @@ HTMLWidgets.widget({
     });
 
 
-    d3.select("#" + el.id + "-both").on("click", function(){
-
-       myTree.tips.forEach(function(d,i){
-          d.tipAttributes.fill = colors[(dummy+i)%10];
-          d.tipAttributes.stroke = d3.rgb(colors[(dummy+i)%10]).darker();
-          d.tipAttributes.old_r = d.tipAttributes.r;
-          d.tipAttributes.r = (dummy+i)%8+2;
-          d.branchAttributes.stroke = d.tipAttributes.stroke;
-         });
-        dummy++;
-        phyloTree.updateTips(myTree, ['r'], ['fill', 'stroke'], 1000);
-        phyloTree.updateBranchStyle(myTree, 'stroke', 1000);
-        console.log(myTree)
-      });
-
     d3.select("#" + el.id + "-reset").on("click", function(){
         zoomClade(myTree.nodes[0]);
      });
