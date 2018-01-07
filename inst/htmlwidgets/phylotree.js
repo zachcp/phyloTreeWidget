@@ -30,6 +30,12 @@ HTMLWidgets.widget({
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
     }
+    
+    // dynamic radius calculation for specific types
+    var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
+      return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
+    }
+
 
     // setup dom
     d3.select("#" + el.id + "-colorby")
@@ -49,7 +55,7 @@ HTMLWidgets.widget({
       .attr("value", function (d) { return d; });
 
 
-
+    
     // main fn
     var treeplot = d3.select("#" + el.id + "-treeplot");
   	myTree = phyloTree.phyloTree(
@@ -124,24 +130,26 @@ HTMLWidgets.widget({
        });
 
     d3.select("#" + el.id + "-sizeby").on("click", function(){
-        // myTree.tips.forEach(function(d,i){ d.tipAttributes.r = (dummy+i)%8+2; });
-        // dummy++;
-        // phyloTree.updateTipAttribute(myTree, 'r', 1000);
+      
         var sizeval = document.getElementById(el.id + "-sizeby").value;
-        console.log(sizeval);
+        
+        // Get Size Domains from the input to make the scaling function
+        var tipDomMin   = params.sizes[sizeval].min;
+        var tipDomMax   = params.sizes[sizeval].max;
+        var tipRangeMin = params.tipMinRadius;
+        var tipRangeMax = params.tipMaxRadius;
+        radfn           = makeRadiusFn(tipDomMin, tipDomMax, tipRangeMin, tipRangeMax);
+        
+        // Calc Individual Sizes and Update
         phyloTree.removeLabels(myTree);
         myTree.nodes.forEach(function(d,i){
             if (d.terminal){
-                // get the tipAttribute value for the tip then
-                tipsizevar = d.n[sizeval] //tip data held under the 'n' field
-                //console.log(tipsizevar)
-                d.tipAttributes.r = tipsizevar;
+                // get the tipAttribute value for the tip and scale it
+                tipsizevar = d.n[sizeval] 
+                d.tipAttributes.r = radfn(tipsizevar);
             }
         });
-        dummy++;
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
-        //phyloTree.updateBranches(myTree, [], ['stroke', 'stroke-width'], 1000);
-        console.log(myTree);
     });
 
 
@@ -155,8 +163,8 @@ HTMLWidgets.widget({
     });
 
 
-    // Callbacks for the Modal
-    // add callbacks to close the modal
+    // Add callbacks to close the modal. 
+    // Must be run after DOM is loaded
     d3.select('.modal-close').on("click", function(d) {
       d3.select('.modal').attr("class", "modal")
     });
