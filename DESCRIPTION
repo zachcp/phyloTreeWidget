@@ -1,10 +1,13 @@
 Package: phylotree
-Title: What the Package Does (Title Case)
+Title:  Interactive Phylogenetic Trees Using the 'phylotree' JavaScript Library
 Version: 0.1.0
-Author: Who wrote it
+Authors@R: person("zachary", "charlop-powers", email = "zach.charlop.powers@gmail.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description:  Create and customize interactive phylogenetic trees using the 'phylotree' 
+    JavaScript library and the 'htmlwidgets' package. These trees can be used directly from the R console, 
+    from 'RStudio', in Shiny apps, and in R Markdown documents.  See <https://github.com/nextstrain/phyloTree/>  for 
+    more information on the 'phylotree' library.
+URL: https://github.com/zachcp/phyloTreeWidget, https://github.com/nextstrain/phyloTree
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
