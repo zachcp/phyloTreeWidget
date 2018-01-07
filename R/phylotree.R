@@ -207,7 +207,10 @@ phylotree_html <- function(id, style, class, width, height, ...) {
           )
         ),
       #modal
-      modal()
+      modal(),
+      
+      #tooltip
+      div(id=sprintf('%s-tooltip', id), class="tooltip", style=css(opacity=0))
     )
 }
 

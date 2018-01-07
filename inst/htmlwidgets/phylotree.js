@@ -21,11 +21,13 @@ HTMLWidgets.widget({
 
   drawGraphic: function(el, params, width, height) {
 
+    gparams   = params;
+
     // setup vars
     var myTree;
     var dummy = 0;
-    gparams   = params;
-
+    var tooltipdiv = d3.select("#" + el.id + "-tooltip")
+    
     // support fns
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
@@ -36,7 +38,22 @@ HTMLWidgets.widget({
       return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
     }
 
-
+    var makeToolTip = function(d) {
+      tooltipdiv.transition()		
+            .duration(200)		
+            .style("opacity", .9);		
+      tooltipdiv.html( "TOOLTIP!!!!!")
+            .style("left", (d3.event.pageX) + "px")		
+            .style("top",  (d3.event.pageY - 28) + "px");	
+    }
+    
+    var removeToolTip = function(d) {
+      tooltipdiv.transition()		
+            .duration(500)		
+            .style("opacity", 0);		
+    }
+ 
+  
     // setup dom
     d3.select("#" + el.id + "-colorby")
       .selectAll("option")
@@ -53,7 +70,8 @@ HTMLWidgets.widget({
       .append("option")
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
-
+      
+    
 
     
     // main fn
@@ -77,9 +95,11 @@ HTMLWidgets.widget({
   	 	callbacks:{onBranchClick:zoomClade,
   					onBranchHover:function(d){console.log(d.n.strain);},
   					onBranchLeave:function(d){console.log(d.n.strain);},
-  					onTipHover:function(d){console.log(d.n.strain);},
-  					onTipLeave:function(d){console.log(d.n.strain);},
-  					onTipClick:function(d){addDataToModal(d)}
+  					//onTipHover:function(d){console.log(d.n.strain);},
+  					//onTipLeave:function(d){console.log(d.n.strain);},
+  					onTipHover:function(d){makeToolTip(d);},
+  					onTipLeave:function(d){removeToolTip(d);},
+  					onTipClick:function(d){addDataToModal(d);},
   					}
   	});
 
@@ -151,6 +171,8 @@ HTMLWidgets.widget({
         });
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
     });
+    
+
 
 
     d3.select("#" + el.id + "-reset").on("click", function(){
