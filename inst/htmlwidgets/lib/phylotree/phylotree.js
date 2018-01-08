@@ -1074,6 +1074,7 @@ exports.updateBranchStyle = updateBranchStyle;
 exports.updateBranchAttribute = updateBranchAttribute;
 exports.updateTips = updateTips;
 exports.updateBranches = updateBranches;
+exports.addScaleBar = addScaleBar;
 exports.zoomIntoClade = zoomIntoClade;
 exports.visibleRectangleFromNodes = visibleRectangleFromNodes;
 exports.inViewFromVisibleRectangle = inViewFromVisibleRectangle;

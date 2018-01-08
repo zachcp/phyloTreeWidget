@@ -32,6 +32,7 @@ PhyloTree can use any numerical parameter as branch length. Such quantities can 
 # use the multi entrypoint of rollup to expose functions in the browser as UMD
 # phyloTree.phyloTree()
 # phyloTree.drawTree()
+npm install --global rollup
 npm install --save-dev rollup-plugin-multi-entry
 
 yarn install

@@ -7,6 +7,7 @@ export default [
         input: ['src/phyloTree.js',
                 'src/drawTree.js',
                 'src/updateTree.js',
+                'src/scaleBar.js',
                 'src/zoom.js',
                 'src/labels.js'],
         plugins: [multiEntry()],
