@@ -56,4 +56,4 @@ phylotree(tree=bird.families, data=birddata, width=500, height=500, layout="rect
           zoomLevel_x = 2, pan_x = 1, orientation_x = 2, python="/Users/zach/anaconda3/bin/python")
 ```
 
-![](phyloTree1.png)
+![](phylotree1.png)
