@@ -26,33 +26,39 @@ HTMLWidgets.widget({
     // setup vars
     var myTree;
     var dummy = 0;
-    var tooltipdiv = d3.select("#" + el.id + "-tooltip")
+    
     
     // support fns
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
     }
     
-    // dynamic radius calculation for specific types
-    var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
-      return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
+    var addDataToTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+  
+        //get tooltip div
+        var tooltipdiv = d3.select("#" + el.id + "-tooltip")
+        tooltipdiv.transition()		
+              .duration(200)		
+              .style("opacity", .9);		
+        tooltipdiv.html( node.n.strain )
+              .style("left", (d3.event.pageX) + "px")		
+              .style("top",  (d3.event.pageY - 28) + "px");	
     }
 
-    var makeToolTip = function(d) {
-      tooltipdiv.transition()		
-            .duration(200)		
-            .style("opacity", .9);		
-      tooltipdiv.html( "TOOLTIP!!!!!")
-            .style("left", (d3.event.pageX) + "px")		
-            .style("top",  (d3.event.pageY - 28) + "px");	
-    }
-    
-    var removeToolTip = function(d) {
+
+    var removeDataFromTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+      
+      //get tooltip div
+      var tooltipdiv = d3.select("#" + el.id + "-tooltip")
       tooltipdiv.transition()		
             .duration(500)		
             .style("opacity", 0);		
     }
- 
+    
+    // dynamic radius calculation for specific types
+    var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
+      return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
+    }
   
     // setup dom
     d3.select("#" + el.id + "-colorby")
@@ -71,8 +77,6 @@ HTMLWidgets.widget({
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
       
-    
-
     
     // main fn
     var treeplot = d3.select("#" + el.id + "-treeplot");
@@ -97,8 +101,8 @@ HTMLWidgets.widget({
   					onBranchLeave:function(d){console.log(d.n.strain);},
   					//onTipHover:function(d){console.log(d.n.strain);},
   					//onTipLeave:function(d){console.log(d.n.strain);},
-  					onTipHover:function(d){makeToolTip(d);},
-  					onTipLeave:function(d){removeToolTip(d);},
+  					onTipHover:function(d){addDataToTooltip(d);},
+  					onTipLeave:function(d){removeDataFromTooltip(d);},
   					onTipClick:function(d){addDataToModal(d);},
   					}
   	});
