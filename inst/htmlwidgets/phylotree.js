@@ -127,8 +127,7 @@ HTMLWidgets.widget({
 
     d3.select("#" + el.id + "-colorby").on("click", function(){
       var colval = document.getElementById(el.id + "-colorby").value;
-      console.log(colval);
-      phyloTree.removeLabels(myTree);
+      //console.log(colval);
       myTree.nodes.forEach(function(d,i){
           if (d.terminal){
 
@@ -165,7 +164,6 @@ HTMLWidgets.widget({
         radfn           = makeRadiusFn(tipDomMin, tipDomMax, tipRangeMin, tipRangeMax);
         
         // Calc Individual Sizes and Update
-        phyloTree.removeLabels(myTree);
         myTree.nodes.forEach(function(d,i){
             if (d.terminal){
                 // get the tipAttribute value for the tip and scale it
