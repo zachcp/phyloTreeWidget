@@ -160,6 +160,21 @@ size_control <- function(id) {
                       HTML(sprintf('<select id="%s-sizeby">SELECT </select>', id)))))))
 }
 
+
+#' Using Bulma Extension CSS for Switch Behavior
+tiplabel_control_switch <- function(id) {
+  div(class="columns",
+      div(class="column is-one-third", tags$label(class="label", "Tip Labels")),
+      div(class="column",
+          div(class="field",
+              tags$input(class="switch",
+                         id=sprintf("%s-tiplabels", id),
+                         name="switchMedium",
+                         type="checkbox"),
+              HTML(sprintf('<label for="%s-tiplabels">Tip Labels</label>', id)))))
+
+}
+
 reset_control <- function(id) {
   div(class="columns",
       div(class="column is-one-third", tags$label(class="label", "Reset")),
@@ -168,6 +183,8 @@ reset_control <- function(id) {
               div(class="control is-expanded",
                   HTML(sprintf('<button id="%s-reset" class="button is-info is-fullwidth ">Reset View</button>', id))))))
 }
+
+
 
 modal <- function() {
   div(class="modal",
@@ -180,13 +197,14 @@ modal <- function() {
           tags$section(class="modal-card-body")))
 }
 
+
 #' This is the HTML Widget custom render html fn.
 #'
 phylotree_html <- function(id, style, class, width, height, ...) {
   div(id = id,
       style=style,
       class=class,
-      
+
       #svg and controls
       div(class="container is-widescreen",
           div(class="columns",
@@ -198,8 +216,9 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       distance_control(id=id),
                       color_control(id=id),
                       size_control(id=id),
+                      tiplabel_control_switch(id=id),
                       reset_control(id=id))),
-          
+
             div(class="column is-three-quarters",
                 # Tree SVG
                 HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
@@ -208,7 +227,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
         ),
       #modal
       modal(),
-      
+
       #tooltip
       div(id=sprintf('%s-tooltip', id), class="tooltip notification is-info", style=css(opacity=0))
     )

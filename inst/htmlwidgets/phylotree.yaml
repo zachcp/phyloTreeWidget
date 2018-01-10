@@ -2,7 +2,10 @@ dependencies:
 - name: bulma
   version: 0.6.1
   src: htmlwidgets/lib/bulma
-  stylesheet: bulma.min.css
+  stylesheet:
+    - bulma.min.css
+    - bulma-checkradio.min.css
+    - bulma-switch.min.css
 - name: d3
   version: 3.5.17
   src: htmlwidgets/lib/d3
@@ -16,4 +19,4 @@ dependencies:
   src: htmlwidgets/lib/phylotree_local
   script: phylotree_modal.js
   stylesheet: phylotree_local.css
-  
+
