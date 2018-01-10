@@ -185,7 +185,6 @@ reset_control <- function(id) {
 }
 
 
-
 modal <- function() {
   div(class="modal",
       div(class="modal-background"),

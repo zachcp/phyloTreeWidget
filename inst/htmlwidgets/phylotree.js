@@ -26,40 +26,54 @@ HTMLWidgets.widget({
     // setup vars
     var myTree;
     var dummy = 0;
-    
-    
+
+
     // support fns
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
     }
-    
+
+    const tipText = function(d){
+        if (d.n.strain && d.terminal){
+            return d.n.strain;
+        }else{
+            return "";
+      }
+    }
+
+    const tipFontSize = function(d){return 4.0;}
+
     var addDataToTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
-  
+
         //get tooltip div
         var tooltipdiv = d3.select("#" + el.id + "-tooltip")
-        tooltipdiv.transition()		
-              .duration(200)		
-              .style("opacity", .9);		
+        tooltipdiv.transition()
+              .duration(200)
+              .style("opacity", .9);
         tooltipdiv.html( node.n.strain )
-              .style("left", (d3.event.pageX) + "px")		
-              .style("top",  (d3.event.pageY - 28) + "px");	
+              .style("left", (d3.event.pageX) + "px")
+              .style("top",  (d3.event.pageY - 28) + "px");
     }
 
 
-    var removeDataFromTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
-      
+      var removeDataFromTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+
+
+
+
+
       //get tooltip div
       var tooltipdiv = d3.select("#" + el.id + "-tooltip")
-      tooltipdiv.transition()		
-            .duration(500)		
-            .style("opacity", 0);		
+      tooltipdiv.transition()
+            .duration(500)
+            .style("opacity", 0);
     }
-    
+
     // dynamic radius calculation for specific types
     var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
       return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
     }
-  
+
     // setup dom
     d3.select("#" + el.id + "-colorby")
       .selectAll("option")
@@ -68,7 +82,7 @@ HTMLWidgets.widget({
       .append("option")
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
-    
+
     d3.select("#" + el.id + "-sizeby")
       .selectAll("option")
       .data(d3.keys(params.sizes))
@@ -76,8 +90,8 @@ HTMLWidgets.widget({
       .append("option")
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
-      
-    
+
+
     // main fn
     var treeplot = d3.select("#" + el.id + "-treeplot");
   	myTree = phyloTree.phyloTree(
@@ -153,33 +167,41 @@ HTMLWidgets.widget({
        });
 
     d3.select("#" + el.id + "-sizeby").on("click", function(){
-      
+
         var sizeval = document.getElementById(el.id + "-sizeby").value;
-        
+
         // Get Size Domains from the input to make the scaling function
         var tipDomMin   = params.sizes[sizeval].min;
         var tipDomMax   = params.sizes[sizeval].max;
         var tipRangeMin = params.tipMinRadius;
         var tipRangeMax = params.tipMaxRadius;
         radfn           = makeRadiusFn(tipDomMin, tipDomMax, tipRangeMin, tipRangeMax);
-        
+
         // Calc Individual Sizes and Update
         myTree.nodes.forEach(function(d,i){
             if (d.terminal){
                 // get the tipAttribute value for the tip and scale it
-                tipsizevar = d.n[sizeval] 
+                tipsizevar = d.n[sizeval]
                 d.tipAttributes.r = radfn(tipsizevar);
             }
         });
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
     });
-    
 
+
+    d3.select("#" + el.id + "-tiplabels").on("change", function(){
+      var labeltips = document.getElementById(el.id + "-tiplabels").checked;
+      if (labeltips === true) {
+        phyloTree.tipLabels(myTree, tipText, tipFontSize, 5,5);
+      } else {
+         phyloTree.removeLabels(myTree);
+      };
+    });
 
 
     d3.select("#" + el.id + "-reset").on("click", function(){
         zoomClade(myTree.nodes[0]);
-     });
+    });
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
         console.log("zoom");
@@ -187,7 +209,7 @@ HTMLWidgets.widget({
     });
 
 
-    // Add callbacks to close the modal. 
+    // Add callbacks to close the modal.
     // Must be run after DOM is loaded
     d3.select('.modal-close').on("click", function(d) {
       d3.select('.modal').attr("class", "modal")
@@ -200,6 +222,5 @@ HTMLWidgets.widget({
     d3.select('.modal').on("dblclick", function(d) {
       d3.select('.modal').attr("class", "modal")
     });
-  },
-
+  }
 });
