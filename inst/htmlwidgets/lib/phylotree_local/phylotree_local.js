@@ -39,7 +39,7 @@ const setup_the_dom = function(el, params) {
 
 
 // there are the on-click events that fire when the control boxes are pushed
-var add_listener_functions = function(el, params, domtree) {
+const add_listener_functions = function(el, params, domtree) {
     	d3.select("#" + el.id + "-layout").on("change", function(){
       var layout = document.getElementById(el.id + "-layout").value;
       phyloTree.changeLayout(domtree, 1000, layout);
@@ -119,7 +119,7 @@ var add_listener_functions = function(el, params, domtree) {
 
 
     d3.select("#" + el.id + "-reset").on("click", function(){
-        zoomClade(domtree.nodes[0]);
+        zoomClade(domtree.nodes[0], tree=domtree);
     });
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
@@ -142,7 +142,7 @@ var add_listener_functions = function(el, params, domtree) {
 
 };
 
-var addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
+const addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
 
     //get tooltip div
     var tooltipdiv = d3.select("#" + el.id + "-tooltip")
@@ -154,7 +154,7 @@ var addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr', '
           .style("top",  (d3.event.pageY - 28) + "px");
 };
 
-var removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
+const removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
     //get tooltip div
     var tooltipdiv = d3.select("#" + el.id + "-tooltip")
     tooltipdiv.transition()
