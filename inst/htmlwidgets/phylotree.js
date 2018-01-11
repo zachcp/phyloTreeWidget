@@ -45,7 +45,8 @@ HTMLWidgets.widget({
        autoTipSize:       params.autoTipSize,
   		 margins:           {top:15, bottom:15, left:15, right:15},
   	 	callbacks:          {
-                	 	      onBranchClick:function(d){zoomClade(d, tree=myTree)},
+
+                	 	      onBranchClick:function(d){ phyloTree.zoomIntoClade(domtree, d, 500)},
                 					onBranchHover:function(d){console.log(d.n.strain);},
                 					onBranchLeave:function(d){console.log(d.n.strain);},
                 					//onTipHover:function(d){console.log(d.n.strain);},
