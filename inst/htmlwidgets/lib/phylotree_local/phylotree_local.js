@@ -3,6 +3,10 @@
 //
 
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Helper Functions
+
 // what to label the tips
 const tipText = function(d){
         if (d.n.strain && d.terminal){
@@ -16,6 +20,11 @@ const tipText = function(d){
 var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
   return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
 };
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Control Panel
 
 // add drop down value to the select boxes
 // note: all of the secltions are based on UID from htmlwidgets, 'el.id'
@@ -142,6 +151,9 @@ const add_listener_functions = function(el, params, domtree) {
 
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Tooltips
 const addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
 
     //get tooltip div
@@ -162,8 +174,9 @@ const removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'a
           .style("opacity", 0);
 };
 
-// addDataToModal
-//
+
+////////////////////////////////////////////////////////////////////////////////
+// Modal
 const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
 
   // update title with Node ID
