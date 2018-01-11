@@ -46,7 +46,18 @@ HTMLWidgets.widget({
   		 margins:           {top:15, bottom:15, left:15, right:15},
   	 	callbacks:          {
 
-                	 	      onBranchClick:function(d){ phyloTree.zoomIntoClade(domtree, d, 500)},
+                	 	      onBranchClick:function(d){
+                	 	         var labeltips = document.getElementById(el.id + "-tiplabels").checked;
+                             if (labeltips === true) { phyloTree.removeLabels(domtree);}
+                             phyloTree.zoomIntoClade(domtree, d, 500);
+                             if (labeltips === true) {
+                                phyloTree.tipLabels(
+                                  domtree,
+                                  tipText,
+                                  function(){return params.tipFontSize;},
+                                  5,
+                                  5);
+                              }},
                 					onBranchHover:function(d){console.log(d.n.strain);},
                 					onBranchLeave:function(d){console.log(d.n.strain);},
                 					//onTipHover:function(d){console.log(d.n.strain);},

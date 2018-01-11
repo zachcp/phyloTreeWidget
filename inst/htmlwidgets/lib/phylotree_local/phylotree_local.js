@@ -60,15 +60,18 @@ const add_listener_functions = function(el, params, domtree) {
 
         phyloTree.changeLayout(domtree, 1000, layout);
 
-        if (tiplabels === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5,5);}
+        if (tiplabels === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
 
   	 });
 
 
   	d3.select("#" + el.id + "-distance").on("change", function(){
       var distance = document.getElementById( el.id + "-distance").value;
+      var tiplabels = document.getElementById(el.id + "-tiplabels").checked;
+       if (tiplabels === true) { phyloTree.removeLabels(domtree)}
       phyloTree.changeDistance(domtree, 1000, distance);
-      console.log(domtree);
+      if (tiplabels === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
+      //console.log(domtree);
       });
 
     d3.select("#" + el.id + "-colorby").on("click", function(){
@@ -99,6 +102,7 @@ const add_listener_functions = function(el, params, domtree) {
       console.log(domtree);
        });
 
+    // control the size of the tips
     d3.select("#" + el.id + "-sizeby").on("click", function(){
 
         var sizeval  = document.getElementById(el.id + "-sizeby").value;
@@ -119,11 +123,10 @@ const add_listener_functions = function(el, params, domtree) {
                 d.tipAttributes.r = radfn(tipsizevar);
             }
         });
-        phyloTree.removeLabels(domtree);
+
+        if (tiplabels === true) {phyloTree.removeLabels(domtree)}
         phyloTree.updateTipAttribute(domtree, 'r', 1000);
-        if (tiplabels === true)  {
-          phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);
-        }
+        if (tiplabels === true)  { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
     });
 
 
@@ -138,12 +141,20 @@ const add_listener_functions = function(el, params, domtree) {
 
 
     d3.select("#" + el.id + "-reset").on("click", function(){
-        phyloTree.zoomClade(domtree, domtree.nodes[0], tree=domtree,800);
-    });
+        var labeltips = document.getElementById(el.id + "-tiplabels").checked;
+        if (labeltips === true) { phyloTree.removeLabels(domtree);}
+        phyloTree.zoomIntoClade(domtree, domtree.nodes[0], 800);
+        if (labeltips === true) {
+          phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5,5);
+    }});
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
+       var labeltips = document.getElementById(el.id + "-tiplabels").checked;
+       if (labeltips === true) { phyloTree.removeLabels(domtree);}
         phyloTree.zoomIn(domtree, 1.4,  700);
-    });
+        if (labeltips === true) {
+          phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5,5);
+    }});
 
     // Modal Call backs Here
     // Add callbacks to close the modal.
