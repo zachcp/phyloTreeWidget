@@ -126,6 +126,20 @@ var add_listener_functions = function(el, params, domtree) {
         phyloTree.zoomIn(domtree, 1.4,  700);
     });
 
+    // Modal Call backs Here
+    // Add callbacks to close the modal.
+    d3.select('.modal-close').on("click", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
+
+    d3.select('.modal-background').on("dblclick", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
+
+    d3.select('.modal').on("dblclick", function(d) {
+      d3.select('.modal').attr("class", "modal")
+    });
+
 };
 
 var addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
