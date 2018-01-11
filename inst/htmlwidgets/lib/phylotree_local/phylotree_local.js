@@ -46,6 +46,15 @@ const setup_the_dom = function(el, params) {
       .attr("value", function (d) { return d; });
 };
 
+const cladeZoom = function(d, tree) {
+  var labeltips = document.getElementById(el.id + "-tiplabels").checked;
+  if (labeltips === true) { phyloTree.removeLabels(domtree);}
+  phyloTree.zoomIntoClade(tree, d, 500);
+  if (labeltips === true) {
+    phyloTree.tipLabels(tree, tipText, function(){return params.tipFontSize;}, 5,5);
+  }
+}
+
 
 // there are the on-click events that fire when the control boxes are pushed
 const add_listener_functions = function(el, params, domtree) {

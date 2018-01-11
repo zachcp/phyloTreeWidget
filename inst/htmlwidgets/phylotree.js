@@ -44,24 +44,10 @@ HTMLWidgets.widget({
        branchStrokeWidth: params.branchStrokeWidth,
        autoTipSize:       params.autoTipSize,
   		 margins:           {top:15, bottom:15, left:15, right:15},
-  	 	callbacks:          {
-
-                	 	      onBranchClick:function(d){
-                	 	         var labeltips = document.getElementById(el.id + "-tiplabels").checked;
-                             if (labeltips === true) { phyloTree.removeLabels(domtree);}
-                             phyloTree.zoomIntoClade(domtree, d, 500);
-                             if (labeltips === true) {
-                                phyloTree.tipLabels(
-                                  domtree,
-                                  tipText,
-                                  function(){return params.tipFontSize;},
-                                  5,
-                                  5);
-                              }},
+  	 	 callbacks:         {
+                	 	      onBranchClick:function(d){ ladeZoom(d, tree=myTree);},
                 					onBranchHover:function(d){console.log(d.n.strain);},
                 					onBranchLeave:function(d){console.log(d.n.strain);},
-                					//onTipHover:function(d){console.log(d.n.strain);},
-                					//onTipLeave:function(d){console.log(d.n.strain);},
                 					onTipHover:function(d){addDataToTooltip(d, el=el);},
                 					onTipLeave:function(d){removeDataFromTooltip(d, el=el);},
                 					onTipClick:function(d){addDataToModal(d);},
