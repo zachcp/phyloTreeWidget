@@ -41,9 +41,9 @@ HTMLWidgets.widget({
       }
     }
 
-    const tipFontSize = function(d){return 4.0;}
+    const tipFontSize = function(d){return params.tipFontSize;};
 
-    var addDataToTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+    const addDataToTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
 
         //get tooltip div
         var tooltipdiv = d3.select("#" + el.id + "-tooltip")
@@ -53,26 +53,20 @@ HTMLWidgets.widget({
         tooltipdiv.html( node.n.strain )
               .style("left", (d3.event.pageX) + "px")
               .style("top",  (d3.event.pageY - 28) + "px");
-    }
+    };
 
-
-      var removeDataFromTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
-
-
-
-
-
-      //get tooltip div
-      var tooltipdiv = d3.select("#" + el.id + "-tooltip")
-      tooltipdiv.transition()
-            .duration(500)
-            .style("opacity", 0);
-    }
+    const removeDataFromTooltip = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+        //get tooltip div
+        var tooltipdiv = d3.select("#" + el.id + "-tooltip")
+        tooltipdiv.transition()
+              .duration(500)
+              .style("opacity", 0);
+    };
 
     // dynamic radius calculation for specific types
     var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
       return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
-    }
+    };
 
     // setup dom
     d3.select("#" + el.id + "-colorby")
@@ -127,6 +121,9 @@ HTMLWidgets.widget({
 
 
     // All the D3 select functions here
+    /////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
+
   	 d3.select("#" + el.id + "-layout").on("change", function(){
       var layout = document.getElementById(el.id + "-layout").value;
       phyloTree.changeLayout(myTree, 1000, layout);
