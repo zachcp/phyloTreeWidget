@@ -63,13 +63,7 @@ HTMLWidgets.widget({
               .style("opacity", 0);
     };
 
-    // dynamic radius calculation for specific types
-    var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
-      return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
-    };
-
-    // setup the dom
-    // in phylotree_modal.js
+    // setup the dom. found in phylotree_local.js
     setup_the_dom(el=el, params=params)
 
     // main fn
@@ -101,113 +95,12 @@ HTMLWidgets.widget({
   					}
   	});
 
-
   	phyloTree.drawTree(myTree);
   	fulltree = myTree;
 
+    // All the D3 select functions here. Found in phylotree_local.js
+    add_listener_functions(el=el, params=params)
+    add_modal_callbacks()
 
-    // All the D3 select functions here
-    /////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////
-
-  	 d3.select("#" + el.id + "-layout").on("change", function(){
-      var layout = document.getElementById(el.id + "-layout").value;
-      phyloTree.changeLayout(myTree, 1000, layout);
-  	 });
-
-
-  	d3.select("#" + el.id + "-distance").on("change", function(){
-      var distance = document.getElementById( el.id + "-distance").value;
-      phyloTree.changeDistance(myTree, 1000, distance);
-      console.log(myTree);
-      });
-
-    d3.select("#" + el.id + "-colorby").on("click", function(){
-      var colval = document.getElementById(el.id + "-colorby").value;
-      //console.log(colval);
-      myTree.nodes.forEach(function(d,i){
-          if (d.terminal){
-
-              // get the tipAttribute value for the tip then
-              // lookup and set
-              //console.log(d3.keys(d.tipAttributes))
-              tipcolvar = d.n[colval] //tip data held under the 'n' field
-              console.log(tipcolvar)
-              tipcol    = params.colors[colval][tipcolvar] // note this is fragile and depends on the color input model
-              console.log(tipcol)
-              d.tipAttributes.fill = tipcol;
-              d.tipAttributes.stroke = d3.rgb(tipcol).darker();
-              d.branchAttributes.stroke = d.tipAttributes.stroke;
-          }else{
-              d.branchAttributes.stroke = d3.rgb(params.colors[(dummy+i)%10]).darker();
-              //d.branchAttributes["stroke-width"] = 1+i%7;
-          }
-      });
-      dummy++;
-      phyloTree.updateTips(myTree, [], ['fill', 'stroke'], 1000);
-      phyloTree.updateBranches(myTree, [], ['stroke', 'stroke-width'], 1000);
-      console.log(myTree);
-       });
-
-    d3.select("#" + el.id + "-sizeby").on("click", function(){
-
-        var sizeval  = document.getElementById(el.id + "-sizeby").value;
-        var tiplabel= document.getElementById(el.id + "-tiblabels").checked;
-
-        // Get Size Domains from the input to make the scaling function
-        var tipDomMin   = params.sizes[sizeval].min;
-        var tipDomMax   = params.sizes[sizeval].max;
-        var tipRangeMin = params.tipMinRadius;
-        var tipRangeMax = params.tipMaxRadius;
-        radfn           = makeRadiusFn(tipDomMin, tipDomMax, tipRangeMin, tipRangeMax);
-
-        // Calc Individual Sizes and Update
-        myTree.nodes.forEach(function(d,i){
-            if (d.terminal){
-                // get the tipAttribute value for the tip and scale it
-                tipsizevar = d.n[sizeval]
-                d.tipAttributes.r = radfn(tipsizevar);
-            }
-        });
-        phyloTree.removeLabels(myTree);
-        phyloTree.updateTipAttribute(myTree, 'r', 1000);
-        if (tiplabels === true)  {
-          phyloTree.tipLabels(myTree, tipText, tipFontSize, 5,5);
-        }
-    });
-
-
-    d3.select("#" + el.id + "-tiplabels").on("change", function(){
-      var labeltips = document.getElementById(el.id + "-tiplabels").checked;
-      if (labeltips === true) {
-        phyloTree.tipLabels(myTree, tipText, tipFontSize, 5,5);
-      } else {
-         phyloTree.removeLabels(myTree);
-      }
-    });
-
-
-    d3.select("#" + el.id + "-reset").on("click", function(){
-        zoomClade(myTree.nodes[0]);
-    });
-
-    d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
-        phyloTree.zoomIn(myTree, 1.4,  700);
-    });
-
-
-    // Add callbacks to close the modal.
-    // Must be run after DOM is loaded
-    d3.select('.modal-close').on("click", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
-
-    d3.select('.modal-background').on("dblclick", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
-
-    d3.select('.modal').on("dblclick", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
   }
 });
