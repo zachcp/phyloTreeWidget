@@ -6,7 +6,7 @@
 
 
 // add modal processing function
-var addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
 
   // update title with Node ID
   d3.select(".modal-card-title").text(node.n.name);
@@ -45,5 +45,24 @@ var addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell'
 }
 
 
+const setup_the_dom = function(el, params) {
+      // setup dom
+    d3.select("#" + el.id + "-colorby")
+      .selectAll("option")
+      .data(d3.keys(params.colors))
+      .enter()
+      .append("option")
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; });
+
+    d3.select("#" + el.id + "-sizeby")
+      .selectAll("option")
+      .data(d3.keys(params.sizes))
+      .enter()
+      .append("option")
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; });
+
+}
 
 

@@ -31,7 +31,7 @@ HTMLWidgets.widget({
     // support fns
     const zoomClade = function(d){
     	phyloTree.zoomIntoClade(myTree, d, 800);
-    }
+    };
 
     const tipText = function(d){
         if (d.n.strain && d.terminal){
@@ -39,7 +39,7 @@ HTMLWidgets.widget({
         }else{
             return "";
       }
-    }
+    };
 
     const tipFontSize = function(d){return params.tipFontSize;};
 
@@ -68,23 +68,9 @@ HTMLWidgets.widget({
       return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
     };
 
-    // setup dom
-    d3.select("#" + el.id + "-colorby")
-      .selectAll("option")
-      .data(d3.keys(params.colors))
-      .enter()
-      .append("option")
-      .text(function (d) { return d; })
-      .attr("value", function (d) { return d; });
-
-    d3.select("#" + el.id + "-sizeby")
-      .selectAll("option")
-      .data(d3.keys(params.sizes))
-      .enter()
-      .append("option")
-      .text(function (d) { return d; })
-      .attr("value", function (d) { return d; });
-
+    // setup the dom
+    // in phylotree_modal.js
+    setup_the_dom(el=el, params=params)
 
     // main fn
     var treeplot = d3.select("#" + el.id + "-treeplot");
@@ -165,7 +151,8 @@ HTMLWidgets.widget({
 
     d3.select("#" + el.id + "-sizeby").on("click", function(){
 
-        var sizeval = document.getElementById(el.id + "-sizeby").value;
+        var sizeval  = document.getElementById(el.id + "-sizeby").value;
+        var tiplabel= document.getElementById(el.id + "-tiblabels").checked;
 
         // Get Size Domains from the input to make the scaling function
         var tipDomMin   = params.sizes[sizeval].min;
@@ -182,7 +169,11 @@ HTMLWidgets.widget({
                 d.tipAttributes.r = radfn(tipsizevar);
             }
         });
+        phyloTree.removeLabels(myTree);
         phyloTree.updateTipAttribute(myTree, 'r', 1000);
+        if (tiplabels === true)  {
+          phyloTree.tipLabels(myTree, tipText, tipFontSize, 5,5);
+        }
     });
 
 
@@ -192,7 +183,7 @@ HTMLWidgets.widget({
         phyloTree.tipLabels(myTree, tipText, tipFontSize, 5,5);
       } else {
          phyloTree.removeLabels(myTree);
-      };
+      }
     });
 
 
@@ -201,7 +192,6 @@ HTMLWidgets.widget({
     });
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
-        console.log("zoom");
         phyloTree.zoomIn(myTree, 1.4,  700);
     });
 
