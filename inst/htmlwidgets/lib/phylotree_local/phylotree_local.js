@@ -202,23 +202,4 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
 
 };
 
-// add_modal_callbacks
-//
-// this function controls the display of the modal
-// Note this is all based on html modal classes created in phyotree.R
-// css is the bulma modal css.
-const add_modal_callbacks = function() {
-    // Add callbacks to close the modal.
-    // Must be run after DOM is loaded
-    d3.select('.modal-close').on("click", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
 
-    d3.select('.modal-background').on("dblclick", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
-
-    d3.select('.modal').on("dblclick", function(d) {
-      d3.select('.modal').attr("class", "modal")
-    });
-}
