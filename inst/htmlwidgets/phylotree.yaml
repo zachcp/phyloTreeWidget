@@ -17,6 +17,6 @@ dependencies:
 - name: phyloTree-local
   version: 0.0.1
   src: htmlwidgets/lib/phylotree_local
-  script: phylotree_modal.js
+  script: phylotree_local.js
   stylesheet: phylotree_local.css
 

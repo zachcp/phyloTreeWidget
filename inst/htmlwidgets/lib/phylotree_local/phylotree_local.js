@@ -69,7 +69,6 @@ const setup_the_dom = function(el, params) {
 
 };
 
-
 const add_contorl_listeners = function(el, params) {
     	 d3.select("#" + el.id + "-layout").on("change", function(){
       var layout = document.getElementById(el.id + "-layout").value;
@@ -157,7 +156,6 @@ const add_contorl_listeners = function(el, params) {
     });
 
 };
-
 
 const add_modal_callbacks = function() {
     // Add callbacks to close the modal.
