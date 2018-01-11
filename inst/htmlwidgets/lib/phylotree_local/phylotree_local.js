@@ -119,7 +119,7 @@ const add_listener_functions = function(el, params, domtree) {
 
 
     d3.select("#" + el.id + "-reset").on("click", function(){
-        zoomClade(domtree.nodes[0], tree=domtree);
+        phyloTree.zoomClade(domtree, domtree.nodes[0], tree=domtree,800);
     });
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
@@ -160,10 +160,6 @@ const removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'a
     tooltipdiv.transition()
           .duration(500)
           .style("opacity", 0);
-};
-
-const zoomClade = function(d, tree){
-    	phyloTree.zoomIntoClade(tree, d, 800);
 };
 
 // addDataToModal
