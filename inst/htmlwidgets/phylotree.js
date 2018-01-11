@@ -21,16 +21,14 @@ HTMLWidgets.widget({
 
   drawGraphic: function(el, params, width, height) {
 
-    // setup vars
-    var myTree;
-    var treeplot = d3.select("#" + el.id + "-treeplot");
-
     // setup the dom; add drop downs to the menu itmes.
     // found in phylotree_local.js
     setup_the_dom(el=el, params=params)
 
+
     // setup and draw the tree
-  	myTree = phyloTree.phyloTree(
+    const treeplot = d3.select("#" + el.id + "-treeplot");
+  	const myTree = phyloTree.phyloTree(
   		params.treejson,
   		{svg:               treeplot,
   		 layout:            params.layout,
