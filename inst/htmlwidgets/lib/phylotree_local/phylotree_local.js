@@ -49,9 +49,19 @@ const setup_the_dom = function(el, params) {
 
 // there are the on-click events that fire when the control boxes are pushed
 const add_listener_functions = function(el, params, domtree) {
+
+      // handle layout here.
     	d3.select("#" + el.id + "-layout").on("change", function(){
-      var layout = document.getElementById(el.id + "-layout").value;
-      phyloTree.changeLayout(domtree, 1000, layout);
+
+        var layout    = document.getElementById(el.id + "-layout").value;
+        var tiplabels = document.getElementById(el.id + "-tiplabels").checked;
+
+        if (tiplabels === true) { phyloTree.removeLabels(domtree)}
+
+        phyloTree.changeLayout(domtree, 1000, layout);
+
+        if (tiplabels === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5,5);}
+
   	 });
 
 
