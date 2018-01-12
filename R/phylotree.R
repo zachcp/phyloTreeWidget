@@ -179,6 +179,19 @@ tiplabel_control_switch <- function(id) {
 
 }
 
+regex_highlight_switch <- function(id) {
+  div(class="field has-addons has-addons-right",
+      tags$p(class="control",
+             tags$input(class="input",
+                        id=sprintf("%s-regexinput", id),
+                        type="text",
+                        placeholder="Regex Selection")),
+      tags$p(class="control",
+             tags$span(class="select",
+                       tags$select(id=sprintf("%s-regexselectbox", id))))
+      )
+}
+
 reset_control <- function(id) {
   div(class="columns",
       div(class="column is-one-third", tags$label(class="label", "Reset")),
@@ -220,6 +233,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       color_control(id=id),
                       size_control(id=id),
                       tiplabel_control_switch(id=id),
+                      regex_highlight_switch(id=id),
                       reset_control(id=id))),
 
             div(class="column is-three-quarters",

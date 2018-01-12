@@ -37,6 +37,14 @@ const setup_the_dom = function(el, params) {
       .text(function (d) { return d; })
       .attr("value", function (d) { return d; });
 
+    d3.select("#" + el.id + "-regexselectbox")
+      .selectAll("option")
+      .data(d3.keys(params.colors))
+      .enter()
+      .append("option")
+      .text(function (d) { return d; })
+      .attr("value", function (d) { return d; });
+
     d3.select("#" + el.id + "-sizeby")
       .selectAll("option")
       .data(d3.keys(params.sizes))
@@ -90,13 +98,11 @@ const add_listener_functions = function(el, params, domtree) {
           if (d.terminal){
 
               // get the tipAttribute value for the tip then
-              // lookup and set
-              //console.log(d3.keys(d.tipAttributes))
               tipcolvar = d.n[colval] //tip data held under the 'n' field
-              console.log(tipcolvar)
+
               // note this is fragile and depends on the color input model
               tipcol    = params.colors[colval][tipcolvar]
-              console.log(tipcol)
+
               d.tipAttributes.fill = tipcol;
               d.tipAttributes.stroke = d3.rgb(tipcol).darker();
               d.branchAttributes.stroke = d.tipAttributes.stroke;
@@ -148,6 +154,11 @@ const add_listener_functions = function(el, params, domtree) {
       }
     });
 
+    d3.select("#" + el.id + "-regexinput").on('input', function(d){
+      textval = d3.select("#" + el.id + "-regexinput")
+      console.log("changed!!")
+
+    })
 
     d3.select("#" + el.id + "-reset").on("click", function(){
         var labeltips = document.getElementById(el.id + "-tiplabels").checked;
