@@ -46,7 +46,7 @@ const setup_the_dom = function(el, params) {
       .attr("value", function (d) { return d; });
 };
 
-const cladeZoom = function(d, tree) {
+const cladeZoom = function(d, tree, el) {
   var labeltips = document.getElementById(el.id + "-tiplabels").checked;
   if (labeltips === true) { phyloTree.removeLabels(domtree);}
   phyloTree.zoomIntoClade(tree, d, 500);
@@ -63,13 +63,13 @@ const add_listener_functions = function(el, params, domtree) {
     	d3.select("#" + el.id + "-layout").on("change", function(){
 
         var layout    = document.getElementById(el.id + "-layout").value;
-        var tiplabels = document.getElementById(el.id + "-tiplabels").checked;
+        var labeltips = document.getElementById(el.id + "-tiplabels").checked;
 
-        if (tiplabels === true) { phyloTree.removeLabels(domtree)}
+        if (labeltips === true) { phyloTree.removeLabels(domtree)}
 
         phyloTree.changeLayout(domtree, 1000, layout);
 
-        if (tiplabels === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
+        if (labeltips === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
 
   	 });
 
@@ -114,8 +114,8 @@ const add_listener_functions = function(el, params, domtree) {
     // control the size of the tips
     d3.select("#" + el.id + "-sizeby").on("click", function(){
 
-        var sizeval  = document.getElementById(el.id + "-sizeby").value;
-        var tiplabel = document.getElementById(el.id + "-tiplabels").checked;
+        var sizeval   = document.getElementById(el.id + "-sizeby").value;
+        var tiplabels = document.getElementById(el.id + "-tiplabels").checked;
 
         // Get Size Domains from the input to make the scaling function
         var tipDomMin   = params.sizes[sizeval].min;

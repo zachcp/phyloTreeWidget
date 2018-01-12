@@ -45,7 +45,7 @@ HTMLWidgets.widget({
        autoTipSize:       params.autoTipSize,
   		 margins:           {top:15, bottom:15, left:15, right:15},
   	 	 callbacks:         {
-                	 	      onBranchClick:function(d){ ladeZoom(d, tree=myTree);},
+                	 	      onBranchClick:function(d){cladeZoom(d, tree=myTree, el=el);},
                 					onBranchHover:function(d){console.log(d.n.strain);},
                 					onBranchLeave:function(d){console.log(d.n.strain);},
                 					onTipHover:function(d){addDataToTooltip(d, el=el);},
