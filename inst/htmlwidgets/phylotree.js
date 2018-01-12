@@ -43,7 +43,10 @@ HTMLWidgets.widget({
        branchStroke:      params.branchStroke,
        branchStrokeWidth: params.branchStrokeWidth,
        autoTipSize:       params.autoTipSize,
-  		 margins:           {top:15, bottom:15, left:15, right:15},
+  		 margins:           {top:     params.margins,
+  		                     bottom:  params.margins,
+  		                     left:    params.margins,
+  		                     right:   params.margins},
   	 	 callbacks:         {
                 	 	      onBranchClick:function(d){cladeZoom(d, tree=myTree, el=el);},
                 					onBranchHover:function(d){console.log(d.n.strain);},
