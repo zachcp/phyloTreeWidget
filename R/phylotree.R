@@ -29,8 +29,8 @@ phylotree <- function(tree,
                       branchStrokeWidth=4.0,
                       autoTipSize=TRUE,
                       python="python",
-                      width = 600,
-                      height = 600,
+                      width = NULL,
+                      height = NULL,
                       elementId = NULL) {
 
   treejson <- process_tree(tree, data, python)
@@ -238,7 +238,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       regex_highlight_switch(id=id),
                       reset_control(id=id))),
 
-            div(class="column is-three-quarters",
+            div(class="column",
                 # Tree SVG
                 HTML(sprintf("<svg width=%s height=%s id='%s-treeplot'></svg>",
                              width, height, id)))

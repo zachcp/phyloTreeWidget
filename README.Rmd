@@ -84,7 +84,6 @@ p %>%
 
 ```
 ![](phylotree_highlight.png)
-
 ## Hide Controls
 
 You can hide the control panel to focus only on the tree.
