@@ -207,7 +207,7 @@ const addDataToTooltip = function(node, el, excludes=["parent", 'clade', 'attr',
           .style("top",  (d3.event.pageY - 28) + "px");
 };
 
-const removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'attr', 'shell']) {
+const removeDataFromTooltip = function(node, el) {
     //get tooltip div
     var tooltipdiv = d3.select("#" + el.id + "-tooltip")
     tooltipdiv.transition()
@@ -218,7 +218,7 @@ const removeDataFromTooltip = function(node, el, excludes=["parent", 'clade', 'a
 
 ////////////////////////////////////////////////////////////////////////////////
 // Modal
-const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell']) {
+const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shell', 'strain', 'name']) {
 
   // update title with Node ID
   d3.select(".modal-card-title").text(node.n.name);
@@ -234,21 +234,25 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
   nodekeys.forEach(function(nodekey) {
 
     if (excludes.includes(nodekey)) {
-      console.log("Excluding: " + nodekey)
       return
     }
 
     console.log("NOT Excluding: " + nodekey)
     console.log(nodekey)
-    content = document.createTextNode(nodekey + ": " + node.n[nodekey]);
+    
+    //keyname = document
+    //  .createElement('h1')
+    //  .appendChild(
+    //      document.createTextNode(nodekey))
+    
+    
+    title  = document.createElement("b"); 
+    title.appendChild(document.createTextNode(nodekey + ":  "))
+    content = document.createTextNode(node.n[nodekey]);
+    modalbody.appendChild(title);
     modalbody.appendChild(content);
+    //modalbody.appendChild(keyname);
     modalbody.appendChild(document.createElement("br"));
-
-
-    // valcontent = document.createTextNode(node.n[nodekey]);
-    // modalbody.appendChild(valcontent)
-    // modalbody.appendChild(document.createElement("hr"));
-
   });
 
   // Make Node Visible
