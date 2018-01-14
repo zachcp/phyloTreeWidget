@@ -293,5 +293,23 @@ const highlight_tips = function(tree, params) {
   phyloTree.updateTips(tree, [], ['fill', 'stroke'], 500);
   phyloTree.updateTipAttribute(tree, 'r')
 
-}
+};
+
+const highlight_tips_list = function(tree, params) {
+
+  params.highlightlist.forEach(function(d,i){
+    tree.tips
+      .filter( function(tip) {
+          return d.nodenames.includes( tip.n[d.column])})
+      .forEach( function(tip,i) {
+          tip.tipAttributes['r'] =      d.highlight_size
+          tip.tipAttributes['fill'] =   d.highlight_color
+          tip.tipAttributes['stroke'] = d.highlight_color
+      });
+  });
+
+  phyloTree.updateTips(tree, [], ['fill', 'stroke'], 500);
+  phyloTree.updateTipAttribute(tree, 'r')
+
+};
 

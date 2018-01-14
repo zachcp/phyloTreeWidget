@@ -66,8 +66,11 @@ HTMLWidgets.widget({
   	phyloTree.drawTree(myTree);
 
   	// add highlights
-    if (!params.highlights === null) {
+    if (params.highlights !== null) {
       highlight_tips(tree=myTree, params=params)
+    }
+    if (params.highlightlist !== null) {
+      highlight_tips_list(tree=myTree, params=params)
     }
 
     // all the D3 select functions here.
