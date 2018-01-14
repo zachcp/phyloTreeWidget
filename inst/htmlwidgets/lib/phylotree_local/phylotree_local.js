@@ -257,3 +257,21 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
 };
 
 
+const highlight_tips = function(tree, params) {
+  
+  params.highlights.forEach(function(d,i){
+    tree.tips
+      .filter( function(tip) {
+          return tip.n[d.column].match(new RegExp(d.tipregex, "i")) ? true : false;})
+      .forEach( function(tip,i) {
+          tip.tipAttributes['r'] =      d.highlight_size
+          tip.tipAttributes['fill'] =   d.highlight_color
+          tip.tipAttributes['stroke'] = d.highlight_color
+      });
+  });
+
+  phyloTree.updateTips(tree, [], ['fill', 'stroke'], 500);
+  phyloTree.updateTipAttribute(tree, 'r')
+  
+}
+

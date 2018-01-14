@@ -58,6 +58,9 @@ HTMLWidgets.widget({
   	});
 
   	phyloTree.drawTree(myTree);
+  	
+  	// add highlights
+  	highlight_tips(tree=myTree, params=params)
 
     // all the D3 select functions here.
     //Found in phylotree_local.js
@@ -65,7 +68,7 @@ HTMLWidgets.widget({
 
     // export to global scope for testing/experimentation
     fulltree = myTree;
-  	gparams   = params;
+  	gparams  = params;
 
   }
 });

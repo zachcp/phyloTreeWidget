@@ -2,6 +2,7 @@
 
 export(create_colormaps)
 export(create_sizemaps)
+export(highlight_tips)
 export(phylotree)
 export(phylotreeOutput)
 export(process_tree)
