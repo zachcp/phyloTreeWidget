@@ -64,7 +64,8 @@ phylotree <- function(tree,
     tipStrokeWidth=tipStrokeWidth,
     branchStroke=branchStroke,
     branchStroke=branchStroke,
-    autoTipSize=autoTipSize
+    autoTipSize=autoTipSize,
+    controlpanel=TRUE
   )
 
   # create widget
@@ -225,7 +226,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
       #svg and controls
       div(class="container is-widescreen",
           div(class="columns",
-             div(class="column is-one-quarter",
+             div(class="column is-one-quarter", id = sprintf("%s-controlpanel", id),
                   div(class="box",
                       tags$p(align="center", "phylotree controls"),
                       tags$hr(),

@@ -72,7 +72,18 @@ p %>%
   highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
   highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
   highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
-  
 ```
 
 ![](phylotree_highlight.png)
+
+Hide Controls
+-------------
+
+You can hide the control panel to focus only on the tree.
+
+
+    p %>% 
+      highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+      highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
+      highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5) %>%
+      hide_controls()

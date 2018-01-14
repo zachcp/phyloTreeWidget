@@ -24,8 +24,14 @@ HTMLWidgets.widget({
     // setup the dom; add drop downs to the menu itmes.
     // found in phylotree_local.js
     setup_the_dom(el=el, params=params)
-
-
+    
+    // hide controls 
+    if (params.controlpanel === false) {
+      console.log('Hiding control panel!')
+      d3.select("#" + el.id + "-controlpanel").style('display', 'none')
+      // note opposite is: ...style('display', 'block')
+    }
+    
     // setup and draw the tree
     const treeplot = d3.select("#" + el.id + "-treeplot");
   	const myTree = phyloTree.phyloTree(

@@ -26,3 +26,13 @@ highlight_tips <- function(phytree,
   
   phytree
 }
+
+#' hide_controls
+#' 
+#' hide the controls
+#' 
+#' @export
+hide_controls <- function(phytree) {
+  phytree$x$controlpanel <- FALSE
+  phytree  
+}
