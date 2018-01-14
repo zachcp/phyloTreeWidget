@@ -230,30 +230,22 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
   modalbody.innerHTML = ""
 
   // add the data to the modal
-  var nodekeys = d3.keys(node.n);
-  nodekeys.forEach(function(nodekey) {
-
-    if (excludes.includes(nodekey)) {
-      return
-    }
-
-    console.log("NOT Excluding: " + nodekey)
-    console.log(nodekey)
+  var table = d3.select(".modal-card-body")
+                .append("table")
+                .attr('class', 'table is-fullwidth')
+  
+  var	tbody = table.append('tbody');
+	
+	// exclude columns based on exclusion list
+	table_entries = d3.entries(node.n).filter(function(d) {return !excludes.includes(d.key)})
+	
+	var rows = tbody.selectAll('tr')
+    .data(table_entries)
+    .enter()
+    .append('tr')
     
-    //keyname = document
-    //  .createElement('h1')
-    //  .appendChild(
-    //      document.createTextNode(nodekey))
-    
-    
-    title  = document.createElement("b"); 
-    title.appendChild(document.createTextNode(nodekey + ":  "))
-    content = document.createTextNode(node.n[nodekey]);
-    modalbody.appendChild(title);
-    modalbody.appendChild(content);
-    //modalbody.appendChild(keyname);
-    modalbody.appendChild(document.createElement("br"));
-  });
+  rows.append('th').text( function(d) {return d.key})
+  rows.append('td').text( function(d) {return d.value})
 
   // Make Node Visible
   d3.select('.modal').attr("class", "modal is-active")
