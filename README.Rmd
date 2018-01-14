@@ -45,7 +45,8 @@ birddata <- data.frame(
   node = bird.families$tip.label,
   col1 = sample(1:5, length(bird.families$tip.label), replace=T),
   col2 = sample(1:500, length(bird.families$tip.label), replace=T),
-  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T)
+  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T),
+  col5 = c(rep("CLADE1", 40), rep("CLADE2", 40), rep("CLADE3", 40), rep("CLADE4", 17))
 )
 
 # currently colors are very simple.
@@ -75,7 +76,7 @@ Highlight information can be passed using the `highlight_tips` function. This us
 
 ```{r, eval=FALSE}
 
-p <- phylotree(tree=bird.families, data=birddata, python="/Users/zachpowers/anaconda3/bin/python")
+p <- phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
 
 p %>% 
   highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
@@ -88,8 +89,7 @@ p %>%
 
 You can hide the control panel to focus only on the tree.
 
-```
-
+```{r eval=FALSE}
 p %>% 
   highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
   highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%

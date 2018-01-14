@@ -45,3 +45,13 @@ hide_controls <- function(phytree) {
   phytree$x$controlpanel <- FALSE
   phytree
 }
+
+#' change_tipsize
+#'
+#' change tipsize
+#'
+#' @export
+change_tipsize <- function(phytree, size=10) {
+  phytree$x$tipRadius <- size
+  phytree
+}
