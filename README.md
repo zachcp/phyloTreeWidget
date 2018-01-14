@@ -20,13 +20,14 @@ devtools::install_github("zachcp/phyloTreeWidget")
 # libraries installed: click, biopython, pandas
 ```
 
-Example
--------
+Basic Example
+-------------
 
 This is a basic example which shows you how to generate a tree with data from ape.
 
 ``` r
 library(ape)
+library(dplyr)
 data("bird.families")
 
 # create a dataframe using the tips from the
@@ -39,12 +40,12 @@ birddata <- data.frame(
 )
 
 # currently colors are very simple.
-# we can imagein a few ways of passing colors/colormaps into a widget
+# we can imagine a few ways of passing colors/colormaps into a widget
 create_colormaps(birddata)
 create_sizemaps(birddata)
 
 # plot the widget.
-# note that the data -> JSOn converter requieres python with the following
+# note that the data -> JSON converter requieres python with the following
 # libraries installed: click, biopython, pands
 # # phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
 phylotree(tree=bird.families, data=birddata)
@@ -57,3 +58,21 @@ phylotree(tree=bird.families, data=birddata, width=500, height=500, layout="rect
 ```
 
 ![](phylotree1.png)
+
+Highlighting
+------------
+
+Highlight information can be passed using the `highlight_tips` function. This uses a regex to find matches and applies a color and a size to the matching tips. These calls can be chained together to style the tip.
+
+``` r
+
+p <- phylotree(tree=bird.families, data=birddata, python="/Users/zachpowers/anaconda3/bin/python")
+
+p %>% 
+  highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+  highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
+  highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
+  
+```
+
+![](phylotree_highlight.png)
