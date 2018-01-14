@@ -106,13 +106,14 @@ const add_listener_functions = function(el, params, domtree) {
               d.tipAttributes.fill = tipcol;
               d.tipAttributes.stroke = d3.rgb(tipcol).darker();
               d.branchAttributes.stroke = d.tipAttributes.stroke;
+              d.tipAttributes.class = "tip nip";
           }else{
               //d.branchAttributes.stroke = d3.rgb(params.colors[(dummy+i)%10]).darker();
               //d.branchAttributes["stroke-width"] = 1+i%7;
           }
       });
 
-      phyloTree.updateTips(domtree, [], ['fill', 'stroke'], 1000);
+      phyloTree.updateTips(domtree, ['class'], ['fill', 'class'], 1000);
       phyloTree.updateBranches(domtree, [], ['stroke', 'stroke-width'], 1000);
       console.log(domtree);
        });
