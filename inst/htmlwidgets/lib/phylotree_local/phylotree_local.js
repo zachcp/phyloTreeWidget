@@ -155,10 +155,33 @@ const add_listener_functions = function(el, params, domtree) {
     });
 
     d3.select("#" + el.id + "-regexinput").on('input', function(d){
-      textval = d3.select("#" + el.id + "-regexinput")
-      console.log("changed!!")
+      textval = document.getElementById(el.id + '-regexinput').value
+      colval  = document.getElementById(el.id + '-regexselectbox').value
 
-    })
+      console.log(colval);
+      console.log(params.highlight_size);
+      console.log(params.highlight_color);
+
+      if (textval.length > 3) {
+              domtree.tips
+        //.filter( function(tip) {
+        //      return tip.n[colval].match(new RegExp(textval, "i")) ? true : false;})
+        .forEach( function(tip,i) {
+
+            tipmatches = tip.n[colval].match(new RegExp(textval, "i"))
+            if (tipmatches === true) {
+              tip.tipAttributes['r'] =      params.highlight_size
+            } else {
+              tip.tipAttributes['r'] =      params.tipRadius
+            }
+
+            console.log(tip);
+        });
+
+        phyloTree.updateTips(domtree, [], ['fill', 'stroke'], 500);
+        phyloTree.updateTipAttribute(domtree, 'r')
+      }
+    });
 
     d3.select("#" + el.id + "-reset").on("click", function(){
         var labeltips = document.getElementById(el.id + "-tiplabels").checked;
@@ -233,17 +256,17 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
   var table = d3.select(".modal-card-body")
                 .append("table")
                 .attr('class', 'table is-fullwidth')
-  
+
   var	tbody = table.append('tbody');
-	
+
 	// exclude columns based on exclusion list
 	table_entries = d3.entries(node.n).filter(function(d) {return !excludes.includes(d.key)})
-	
+
 	var rows = tbody.selectAll('tr')
     .data(table_entries)
     .enter()
     .append('tr')
-    
+
   rows.append('th').text( function(d) {return d.key})
   rows.append('td').text( function(d) {return d.value})
 
@@ -254,7 +277,7 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
 
 
 const highlight_tips = function(tree, params) {
-  
+
   params.highlights.forEach(function(d,i){
     tree.tips
       .filter( function(tip) {
@@ -268,6 +291,6 @@ const highlight_tips = function(tree, params) {
 
   phyloTree.updateTips(tree, [], ['fill', 'stroke'], 500);
   phyloTree.updateTipAttribute(tree, 'r')
-  
+
 }
 

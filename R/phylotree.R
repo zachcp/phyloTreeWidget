@@ -31,7 +31,9 @@ phylotree <- function(tree,
                       python="python",
                       width = NULL,
                       height = NULL,
-                      elementId = NULL) {
+                      elementId = NULL,
+                      highlight_color="#FF0000",
+                      highlight_size=30) {
 
   treejson <- process_tree(tree, data, python)
 
@@ -65,7 +67,9 @@ phylotree <- function(tree,
     branchStroke=branchStroke,
     branchStroke=branchStroke,
     autoTipSize=autoTipSize,
-    controlpanel=TRUE
+    controlpanel=TRUE,
+    highlight_color = highlight_color,
+    highlight_size = highlight_size
   )
 
   # create widget
@@ -235,7 +239,7 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       color_control(id=id),
                       size_control(id=id),
                       tiplabel_control_switch(id=id),
-                      regex_highlight_switch(id=id),
+                      #regex_highlight_switch(id=id),
                       reset_control(id=id))),
 
             div(class="column",
