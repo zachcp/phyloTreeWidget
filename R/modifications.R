@@ -8,8 +8,8 @@ highlight_tips_regex <- function(phytree,
                            column='strain',
                            highlight_color='#60AA9E',
                            highlight_color_stroke=NULL,
-                           highlight_size=10,
-                           highlight_stroke_width=2) {
+                           highlight_size=NULL,
+                           highlight_stroke_width=NULL) {
 
   highlights <- phytree$x$highlights
 
@@ -21,7 +21,7 @@ highlight_tips_regex <- function(phytree,
   }
 
   #
-  if (is.null(highlight_color_stroke)) highlight_color_stroke <- highlight_color
+  #if (is.null(highlight_color_stroke)) highlight_color_stroke <- highlight_color
 
   # put highlight data into the params list.
   phytree$x$highlights[[highlightslot]] <- list(
@@ -44,10 +44,11 @@ highlight_tips_regex <- function(phytree,
 highlight_tips_list <- function(phytree,
                                  nodenames,
                                  column='strain',
-                                 highlight_color='#60AA9E',
+                                 highlight_color=NULL,
                                  highlight_color_stroke=NULL,
-                                 highlight_size=10,
-                                 highlight_stroke_width=2) {
+                                 highlight_size=NULL,
+                                 highlight_stroke_width=NULL) {
+
 
   highlights <- phytree$x$highlightlists
 
@@ -59,7 +60,7 @@ highlight_tips_list <- function(phytree,
   }
 
   #
-  if (is.null(highlight_color_stroke)) highlight_color_stroke <- highlight_color
+  #if (is.null(highlight_color_stroke)) highlight_color_stroke <- highlight_color
 
   # put highlight data into the params list.
   phytree$x$highlightlists[[highlightslot]] <- list(

@@ -66,12 +66,13 @@ HTMLWidgets.widget({
   	phyloTree.drawTree(myTree);
 
   	// add highlights
+  	if (params.highlightlists !== null) {
+      highlight_tips_list(tree=myTree, params=params);
+    }
     if (params.highlights !== null) {
       highlight_tips(tree=myTree, params=params);
     }
-    if (params.highlightlists !== null) {
-      highlight_tips_list(tree=myTree, params=params);
-    }
+
 
     // all the D3 select functions here.
     //Found in phylotree_local.js
