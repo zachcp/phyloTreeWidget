@@ -75,7 +75,18 @@ const add_listener_functions = function(el, params, domtree) {
 
         if (labeltips === true) { phyloTree.removeLabels(domtree)}
 
-        phyloTree.changeLayout(domtree, 1000, layout);
+        domtree.nodes.forEach(function(d,i) { d.branchAttributes.opacity = params.branchOpacity} );
+
+        phyloTree.changeLayout(domtree, 200, layout);
+
+        // change layout abolishes opacity on nodes.
+        // set timeoutto allow smooth transitions
+        setTimeout(function() {
+          domtree.nodes.forEach(function(d,i) { d.branchAttributes.opacity = params.branchOpacity} );
+          phyloTree.updateBranches(domtree, [], ['opacity'], 1000);
+          },
+          1000);
+
 
 
         if (labeltips === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
@@ -368,5 +379,7 @@ const highlight_tips = function(tree, params) {
   phyloTree.updateBranches(tree, [], ['stroke', 'opacity'], 500);
 
 };
+
+
 
 
