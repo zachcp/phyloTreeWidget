@@ -79,9 +79,9 @@ Highlight information can be passed using the `highlight_tips` function. This us
 p <- phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
 
 p %>% 
-  highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
-  highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
-  highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
+  highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+  highlight_tips_regex(tipregex="freg", highlight_color = "#60AA9E") %>%
+  highlight_tips_regex(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
 
 ```
 ![](phylotree_highlight.png)
@@ -91,9 +91,9 @@ You can hide the control panel to focus only on the tree.
 
 ```{r eval=FALSE}
 p %>% 
-  highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
-  highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
-  highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5) %>%
+  highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+  highlight_tips_regex(tipregex="freg", highlight_color = "#60AA9E") %>%
+  highlight_tips_regex(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5) %>%
   hide_controls()
 ```
 
