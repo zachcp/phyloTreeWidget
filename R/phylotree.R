@@ -21,12 +21,12 @@ phylotree <- function(tree,
                       pan_y =0,
                       tipRadius=10.0,
                       tipMinRadius=1,
-                      tipMaxRadius=10,
+                      tipMaxRadius=15,
                       tipStroke="#555",
                       tipFill="#555",
                       tipStrokeWidth=1.0,
                       branchStroke="#555",
-                      branchStrokeWidth=4.0,
+                      branchStrokeWidth=2.0,
                       autoTipSize=TRUE,
                       python="python",
                       width = NULL,
@@ -66,7 +66,7 @@ phylotree <- function(tree,
     tipFill=tipFill,
     tipStrokeWidth=tipStrokeWidth,
     branchStroke=branchStroke,
-    branchStroke=branchStroke,
+    branchThickness=NULL,
     autoTipSize=autoTipSize,
     controlpanel=TRUE,
     highlight_color = highlight_color,
@@ -201,11 +201,12 @@ regex_highlight_switch <- function(id) {
 
 reset_control <- function(id) {
   div(class="columns",
-      div(class="column is-one-third", tags$label(class="label", "Reset")),
       div(class="column",
-          div(class="field",
-              div(class="control is-expanded",
-                  HTML(sprintf('<button id="%s-reset" class="button is-info is-fullwidth ">Reset View</button>', id))))))
+          div(class="buttons control",
+              tags$span(id=sprintf("%s-reset",id), class="button is-info is-fullwidth ", "Zoom"),
+              tags$span(id=sprintf("%s-resettipsize",id), class="button is-info is-fullwidth", "Tip Size"),
+              tags$span(id=sprintf("%s-resetbranchsize",id), class="button is-info is-fullwidth", "Branch Size"),
+              tags$span(id=sprintf("%s-resettipcolor",id), class="button is-info is-fullwidth", "Tip Color"))))
 }
 
 
@@ -241,6 +242,8 @@ phylotree_html <- function(id, style, class, width, height, ...) {
                       size_control(id=id),
                       tiplabel_control_switch(id=id),
                       regex_highlight_switch(id=id),
+                      tags$hr(),
+                      tags$p(align="center", "resets"),
                       reset_control(id=id))),
 
             div(class="column",

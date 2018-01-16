@@ -159,10 +159,6 @@ const add_listener_functions = function(el, params, domtree) {
       textval = document.getElementById(el.id + '-regexinput').value
       colval  = document.getElementById(el.id + '-regexselectbox').value
 
-      console.log(colval);
-      console.log(params.highlight_size);
-      console.log(params.highlight_color);
-
       if (textval.length > 3) {
               domtree.tips
         //.filter( function(tip) {
@@ -191,6 +187,26 @@ const add_listener_functions = function(el, params, domtree) {
         if (labeltips === true) {
           phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5,5);
     }});
+
+    d3.select("#" + el.id + "-resettipsize").on("click", function(){
+        domtree.tips.forEach(function(d){ d.tipAttributes.r = domtree.tipRadius});
+        phyloTree.updateTips(domtree, ['r'], [], 1000);
+    });
+
+    d3.select("#" + el.id + "-resetbranchsize").on("click", function(){
+        domtree.internals.forEach(function(d){ d.branchAttributes["stroke-width"] = params.branchStrokeWidth});
+        phyloTree.updateBranches(domtree, [], ['stroke-width'], 1000);
+    });
+
+    d3.select("#" + el.id + "-resettipcolor").on("click", function(){
+        domtree.tips.forEach(function(d){
+          d.tipAttributes.fill = params.tipFill
+          d.branchAttributes['stroke'] = params.tipFill
+
+        });
+        phyloTree.updateTips(domtree, [], ['fill'], 1000);
+        phyloTree.updateBranches(domtree, [], ['stroke'], 1000);
+    });
 
     d3.select("#" + el.id + "-treeplot").on("dblclick", function(){
        var labeltips = document.getElementById(el.id + "-tiplabels").checked;
@@ -292,6 +308,7 @@ const highlight_tips = function(tree, params) {
             }
             if (d.highlight_color !== null) {
               tip.tipAttributes['fill'] = d.highlight_color
+              tip.branchAttributes['stroke'] = d.highlight_color
             }
             if (d.highlight_color_stroke !== null) {
               tip.tipAttributes['stroke'] = d.highlight_color_stroke
@@ -304,6 +321,7 @@ const highlight_tips = function(tree, params) {
             }
             if (d.opacity !== null) {
               tip.tipAttributes['opacity'] = d.opacity
+              tip.branchAttributes['opacity'] = d.opacity
             }
 
         });
@@ -323,6 +341,7 @@ const highlight_tips = function(tree, params) {
           }
           if (d.highlight_color !== null) {
             tip.tipAttributes['fill'] = d.highlight_color
+            tip.branchAttributes['stroke'] = d.highlight_color
           }
           if (d.highlight_color_stroke !== null) {
             tip.tipAttributes['stroke'] = d.highlight_color_stroke
@@ -335,6 +354,7 @@ const highlight_tips = function(tree, params) {
           }
           if (d.opacity !== null) {
               tip.tipAttributes['opacity'] = d.opacity
+              tip.branchAttributes['opacity'] = d.opacity
           }
 
       });
@@ -343,6 +363,7 @@ const highlight_tips = function(tree, params) {
 
   // apply the updates
   phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', "stroke-dasharray", "opacity"], 500);
+  phyloTree.updateBranches(tree, [], ['stroke', "opacity"], 500);
 
 };
 
