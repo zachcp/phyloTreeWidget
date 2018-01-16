@@ -47,7 +47,8 @@ highlight_tips_list <- function(phytree,
                                  highlight_color=NULL,
                                  highlight_color_stroke=NULL,
                                  highlight_size=NULL,
-                                 highlight_stroke_width=NULL) {
+                                 highlight_stroke_width=NULL,
+                                 add_dash=FALSE) {
 
 
   highlights <- phytree$x$highlightlists
@@ -69,7 +70,8 @@ highlight_tips_list <- function(phytree,
     highlight_color=highlight_color,
     highlight_color_stroke=highlight_color_stroke,
     highlight_size=highlight_size,
-    highlight_stroke_width=highlight_stroke_width
+    highlight_stroke_width=highlight_stroke_width,
+    dasharray=add_dash
   )
 
   phytree

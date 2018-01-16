@@ -280,7 +280,7 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
 const highlight_tips = function(tree, params) {
 
   // update sequences based on provided lists + attributes
-  if (params.highlightlists !== null) {
+  if (params.highlights !== null) {
     params.highlights.forEach(function(d,i){
       tree.tips
         .filter( function(tip) {
@@ -299,13 +299,12 @@ const highlight_tips = function(tree, params) {
             if (d.highlight_stroke_width !== null) {
               tip.tipAttributes['stroke-width'] = d.highlight_color_width
             }
-
         });
     });
   }
 
   // update sequences based on provided regex + attributes
-  if (params.highlights !== null) {
+  if (params.highlightlists !== null) {
     params.highlightlists.forEach(function(d,i){
     tree.tips
       .filter( function(tip) {
@@ -324,13 +323,17 @@ const highlight_tips = function(tree, params) {
           if (d.highlight_stroke_width !== null) {
             tip.tipAttributes['stroke-width'] = d.highlight_color_width
           }
+          if (d.dasharray == true) {
+              tip.tipAttributes['stroke-dasharray'] = "2,2"
+          }
+
       });
     });
   }
 
   // apply the updates
-  phyloTree.updateTips(tree, [], ['fill', 'stroke','stroke-width'], 500);
-  phyloTree.updateTipAttribute(tree, 'r')
+  phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', "stroke-dasharray"], 500);
+
 };
 
 
