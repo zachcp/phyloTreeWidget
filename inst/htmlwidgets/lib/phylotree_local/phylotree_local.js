@@ -17,7 +17,7 @@ const tipText = function(d){
     };
 
 // dynamic radius calculation for specific types
-var makeRadiusFn = function(domain_max, domain_min, range_min, range_max) {
+var makeRadiusFn = function(domain_min, domain_max, range_min, range_max) {
   return d3.scale.sqrt().domain([domain_min, domain_max]).range([range_min, range_max])
 };
 
