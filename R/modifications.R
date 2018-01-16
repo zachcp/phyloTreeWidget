@@ -9,7 +9,9 @@ highlight_tips_regex <- function(phytree,
                            highlight_color='#60AA9E',
                            highlight_color_stroke=NULL,
                            highlight_size=NULL,
-                           highlight_stroke_width=NULL) {
+                           highlight_stroke_width=NULL,
+                           add_dash=FALSE,
+                           opacity=NULL) {
 
   highlights <- phytree$x$highlights
 
@@ -30,7 +32,9 @@ highlight_tips_regex <- function(phytree,
     highlight_color=highlight_color,
     highlight_color_stroke=highlight_color_stroke,
     highlight_size=highlight_size,
-    highlight_stroke_width=highlight_stroke_width
+    highlight_stroke_width=highlight_stroke_width,
+    add_dash=add_dash,
+    opacity=opacity
   )
 
   phytree
@@ -48,7 +52,8 @@ highlight_tips_list <- function(phytree,
                                  highlight_color_stroke=NULL,
                                  highlight_size=NULL,
                                  highlight_stroke_width=NULL,
-                                 add_dash=FALSE) {
+                                 add_dash=FALSE,
+                                 opacity=NULL) {
 
 
   highlights <- phytree$x$highlightlists
@@ -71,7 +76,8 @@ highlight_tips_list <- function(phytree,
     highlight_color_stroke=highlight_color_stroke,
     highlight_size=highlight_size,
     highlight_stroke_width=highlight_stroke_width,
-    dasharray=add_dash
+    dasharray=add_dash,
+    opacity=opacity
   )
 
   phytree

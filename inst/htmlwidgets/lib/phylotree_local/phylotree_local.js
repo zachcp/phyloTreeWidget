@@ -299,6 +299,13 @@ const highlight_tips = function(tree, params) {
             if (d.highlight_stroke_width !== null) {
               tip.tipAttributes['stroke-width'] = d.highlight_color_width
             }
+            if (d.dasharray == true) {
+              tip.tipAttributes['stroke-dasharray'] = "2,2"
+            }
+            if (d.opacity !== null) {
+              tip.tipAttributes['opacity'] = d.opacity
+            }
+
         });
     });
   }
@@ -326,13 +333,16 @@ const highlight_tips = function(tree, params) {
           if (d.dasharray == true) {
               tip.tipAttributes['stroke-dasharray'] = "2,2"
           }
+          if (d.opacity !== null) {
+              tip.tipAttributes['opacity'] = d.opacity
+          }
 
       });
     });
   }
 
   // apply the updates
-  phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', "stroke-dasharray"], 500);
+  phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', "stroke-dasharray", "opacity"], 500);
 
 };
 
