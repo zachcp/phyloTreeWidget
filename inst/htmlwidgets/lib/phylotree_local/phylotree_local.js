@@ -279,36 +279,34 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
 
 const highlight_tips = function(tree, params) {
 
-  params.highlights.forEach(function(d,i){
-    tree.tips
-      .filter( function(tip) {
-          return tip.n[d.column].match(new RegExp(d.tipregex, "i")) ? true : false;})
-      .forEach( function(tip,i) {
-          // update properties if not null
-          if (d.highlight_size !== null) {
-            tip.tipAttributes['r'] = d.highlight_size
-          }
-          if (d.highlight_color !== null) {
-            tip.tipAttributes['fill'] = d.highlight_color
-          }
-          if (d.highlight_color_stroke !== null) {
-            tip.tipAttributes['stroke'] = d.highlight_color_stroke
-          }
-          if (d.highlight_stroke_width !== null) {
-            tip.tipAttributes['stroke-width'] = d.highlight_color_width
-          }
+  // update sequences based on provided lists + attributes
+  if (params.highlightlists !== null) {
+    params.highlights.forEach(function(d,i){
+      tree.tips
+        .filter( function(tip) {
+            return tip.n[d.column].match(new RegExp(d.tipregex, "i")) ? true : false;})
+        .forEach( function(tip,i) {
+            // update properties if not null
+            if (d.highlight_size !== null) {
+              tip.tipAttributes['r'] = d.highlight_size
+            }
+            if (d.highlight_color !== null) {
+              tip.tipAttributes['fill'] = d.highlight_color
+            }
+            if (d.highlight_color_stroke !== null) {
+              tip.tipAttributes['stroke'] = d.highlight_color_stroke
+            }
+            if (d.highlight_stroke_width !== null) {
+              tip.tipAttributes['stroke-width'] = d.highlight_color_width
+            }
 
-      });
-  });
+        });
+    });
+  }
 
-  phyloTree.updateTips(tree, [], ['fill', 'stroke', 'stroke-width'], 500);
-  phyloTree.updateTipAttribute(tree, 'r')
-
-};
-
-const highlight_tips_list = function(tree, params) {
-
-  params.highlightlists.forEach(function(d,i){
+  // update sequences based on provided regex + attributes
+  if (params.highlights !== null) {
+    params.highlightlists.forEach(function(d,i){
     tree.tips
       .filter( function(tip) {
           return d.nodenames.includes( tip.n[d.column])})
@@ -327,10 +325,12 @@ const highlight_tips_list = function(tree, params) {
             tip.tipAttributes['stroke-width'] = d.highlight_color_width
           }
       });
-  });
+    });
+  }
 
+  // apply the updates
   phyloTree.updateTips(tree, [], ['fill', 'stroke','stroke-width'], 500);
   phyloTree.updateTipAttribute(tree, 'r')
-
 };
+
 
