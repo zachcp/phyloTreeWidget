@@ -1064,6 +1064,7 @@ const tipLabels = function(tree, labelText, fontSize, yPad, xPad, align){
 
 exports.phyloTree = phyloTree;
 exports.drawTree = drawTree;
+exports.branchOpacity = branchOpacity;
 exports.updateGeometry = updateGeometry;
 exports.updateGeometryFade = updateGeometryFade;
 exports.changeLayout = changeLayout;

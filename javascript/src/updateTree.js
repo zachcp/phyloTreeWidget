@@ -4,7 +4,7 @@ import treeLayout from "./treeLayout";
 import treeCanvas from "./treeCanvas";
 
 
-const branchOpacity = function(tree, opacity, dt){
+export const branchOpacity = function(tree, opacity, dt){
     tree.branchStemElements
         .transition().duration(dt)
         .style("opacity", opacity);
