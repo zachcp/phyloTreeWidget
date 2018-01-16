@@ -102,3 +102,13 @@ change_tipsize <- function(phytree, size=10) {
   phytree$x$tipRadius <- size
   phytree
 }
+
+#' scale_branchthickness
+#'
+#' change scale_branchthickness
+#'
+#' @export
+scale_branchthickness <- function(phytree, scale="linear", size=NULL) {
+  phytree$x$branchThickness <- scale
+  phytree
+}

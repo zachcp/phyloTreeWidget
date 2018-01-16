@@ -97,3 +97,9 @@ p %>%
   hide_controls()
 ```
 
+## Scale Tree Branches
+
+```{r eval=FALSE}
+p %>% scale_branchthickness()
+
+```

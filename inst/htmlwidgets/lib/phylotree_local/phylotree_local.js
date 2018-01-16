@@ -12,7 +12,7 @@ const tipText = function(d){
         if (d.n.strain && d.terminal){
             return d.n.strain;
         }else{
-            return "";
+            return d.stats.leafCount;
       }
     };
 
@@ -201,10 +201,11 @@ const add_listener_functions = function(el, params, domtree) {
     d3.select("#" + el.id + "-resettipcolor").on("click", function(){
         domtree.tips.forEach(function(d){
           d.tipAttributes.fill = params.tipFill
+          d.tipAttributes['opacity'] = 1
           d.branchAttributes['stroke'] = params.tipFill
 
         });
-        phyloTree.updateTips(domtree, [], ['fill'], 1000);
+        phyloTree.updateTips(domtree, [], ['fill','opacity'], 1000);
         phyloTree.updateBranches(domtree, [], ['stroke'], 1000);
     });
 
@@ -284,11 +285,11 @@ const addDataToModal = function(node, excludes=["parent", 'clade', 'attr', 'shel
     .enter()
     .append('tr')
 
-  rows.append('th').text( function(d) {return d.key})
-  rows.append('td').text( function(d) {return d.value})
+  rows.append('th').text( function(d) {return d.key});
+  rows.append('td').text( function(d) {return d.value});
 
   // Make Node Visible
-  d3.select('.modal').attr("class", "modal is-active")
+  d3.select('.modal').attr("class", "modal is-active");
 
 };
 
@@ -362,8 +363,8 @@ const highlight_tips = function(tree, params) {
   }
 
   // apply the updates
-  phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', "stroke-dasharray", "opacity"], 500);
-  phyloTree.updateBranches(tree, [], ['stroke', "opacity"], 500);
+  phyloTree.updateTips(tree, ['r'], ['fill', 'stroke','stroke-width', 'stroke-dasharray', 'opacity'], 500);
+  phyloTree.updateBranches(tree, [], ['stroke', 'opacity'], 500);
 
 };
 

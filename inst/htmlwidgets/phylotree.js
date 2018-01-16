@@ -68,6 +68,14 @@ HTMLWidgets.widget({
   	// add highlights
   	highlight_tips(tree=myTree, params=params);
 
+    // update branch thickness
+    if (params.branchThickness !== null) {
+      thickscale = d3.scale.sqrt().domain([1, myTree.tips.length]).range([1, 5])
+      myTree.internals.forEach( function(d,i) {
+        d.branchAttributes["stroke-width"] = thickscale(d.stats.leafCount);
+      });
+      phyloTree.updateBranches(myTree, [], ['stroke-width'], 500);
+    }
 
     // all the D3 select functions here.
     //Found in phylotree_local.js
