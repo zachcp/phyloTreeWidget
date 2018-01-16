@@ -71,7 +71,7 @@ HTMLWidgets.widget({
     // update branch thickness
     if (params.branchThickness !== null) {
       thickscale = d3.scale.sqrt().domain([1, myTree.tips.length]).range([1, 5])
-      myTree.internals.forEach( function(d,i) {
+      myTree.nodes.forEach( function(d,i) {
         d.branchAttributes["stroke-width"] = thickscale(d.stats.leafCount);
       });
       phyloTree.updateBranches(myTree, [], ['stroke-width'], 500);

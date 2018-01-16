@@ -77,6 +77,7 @@ const add_listener_functions = function(el, params, domtree) {
 
         phyloTree.changeLayout(domtree, 1000, layout);
 
+
         if (labeltips === true) { phyloTree.tipLabels(domtree, tipText, function(){return params.tipFontSize;}, 5, 5);}
 
   	 });
