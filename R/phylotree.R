@@ -203,10 +203,10 @@ reset_control <- function(id) {
   div(class="columns",
       div(class="column",
           div(class="buttons control",
-              tags$span(id=sprintf("%s-reset",id), class="button is-info is-fullwidth ", "Zoom"),
-              tags$span(id=sprintf("%s-resettipsize",id), class="button is-info is-fullwidth", "Tip Size"),
-              tags$span(id=sprintf("%s-resetbranchsize",id), class="button is-info is-fullwidth", "Branch Size"),
-              tags$span(id=sprintf("%s-resettipcolor",id), class="button is-info is-fullwidth", "Tip Color"))))
+              tags$span(id=sprintf("%s-reset",id), class="button is-info is-small ", "Zoom"),
+              tags$span(id=sprintf("%s-resettipsize",id), class="button is-info is-small", "Tip Size"),
+              tags$span(id=sprintf("%s-resetbranchsize",id), class="button is-info is-small", "Branch Size"),
+              tags$span(id=sprintf("%s-resettipcolor",id), class="button is-info is-small", "Tip Color"))))
 }
 
 
