@@ -1,6 +1,6 @@
 Package: phylotree
 Title:  Interactive Phylogenetic Trees Using the 'phylotree' JavaScript Library
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: person("zachary", "charlop-powers", email = "zach.charlop.powers@gmail.com", role = c("aut", "cre"))
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description:  Create and customize interactive phylogenetic trees using the 'phylotree' 
