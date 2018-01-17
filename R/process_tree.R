@@ -1,50 +1,57 @@
 #' process_tree
 #'
 #' Convert a tree and a corresponding data frame to JSON consumable
-#' by phyloTree JS. RIght now this means we do the following:
+#' by phyloTree JS.
 #'
-#'  R (tree + df ) -> Disk -> Python (tree + df) -> Python(JSON) -> Disk -> R ->
-#'     HTMLWidget
-#'
-#'  Eventually writing the conversion script in R would allow you to simply do:
-#'
-#'   R( tree + df ) -> R (JSON) -> HTMLWidget
-#'
-#'  But this will take some time. Initial focus are on features. However,
-#'  this dance requires that python is on your PATH and that you have the
-#'  following libraries installed: click, biopython, pandas.
-#'
-#'
-#' @importFrom ape read.tree
-#' @importFrom ape write.tree
-#' @importFrom jsonlite read_json
+#' @import data.tree
+#' @import dplyr
+#' @importFrom purrr map_chr
+#' @importFrom ape nodepath
+#' @importFrom ape makeNodeLabel
 #' @export
 process_tree <- function(tree, data, python="python") {
 
-  # intermediate files will be run in temp if no output is sent
-  # clean up the tempdir when we are done.
-  wd <- tempdir()
-  on.exit(unlink(list.files(wd)))
+  # labal internal nodes and convert to dataframe
+  tree <- tree %>%
+    ape::makeNodeLabel() %>%
+    ape::ladderize()
 
-  treetemp <- paste0(wd, "/tree.nw")
-  datatemp <- paste0(wd, "/data.txt")
-  jsontemp <- paste0(wd, "/tree.json")
+  treedf <- as_data_frame(tree)
 
-  ape::write.tree(tree, file = treetemp)
-  write.table(data, file = datatemp, sep="\t", row.names=FALSE, quote=FALSE)
+  # get name of node
+  treedf$namedparent <- purrr::map_chr(treedf$parent, function(x) {
+    treedf[treedf$node==x,][['label']]
+  })
 
-  process_script   <- system.file("scripts/tree_to_json.py", package="phylotree")
-  cli  <- paste(python,    process_script,
-                "--newick",   treetemp,
-                "--nodedata", datatemp,
-                "--jsonout",  jsontemp)
 
-  print("Converting tree to JSON")
-  system(cli)
+  #combine the tree data with the datframe
+  treedf <- treedf %>%
+    left_join(data, by=c('label'='node')) %>%
+    mutate(branch_length=branch.length) %>%
+    select(-branch.length)
 
-  print("Loading tree JSON")
-  treejson <- jsonlite::read_json(jsontemp)
+  # create node paths for JSON output.
+  # This requires finding the path from the root to the individual node
+  #
+  rootnode <- treedf[treedf$parent==treedf$node,][['node']]
+  treedf[treedf$node==rootnode,][['label']] <- 'root'
 
-  return(treejson)
+  treedf$pathString <- purrr::map_chr(treedf$node, function(p) {
+    nodes      <-  ape::nodepath(bird.families, from=rootnode, to=p)
+    nodechar   <-  purrr::map_chr(nodes, function(n) {
+        treedf[treedf$node==n,][['label']]
+      })
+    paste(nodechar, collapse="/")
+  })
+
+
+  treenode <- as.Node(treedf, mode = c("table"),
+          pathName = "pathString", pathDelimiter = "/",
+          colLevels = NULL,
+          na.rm = TRUE)
+
+  treelist <- ToListExplicit(treenode, unname=TRUE, childrenName = "children", nameName = "strain")
+
+  return(treelist)
 
 }

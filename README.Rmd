@@ -26,8 +26,6 @@ You can install phylotree from github with:
 # install.packages("devtools")
 devtools::install_github("zachcp/phyloTreeWidget")
 
-# note you will ALSO need python with the following
-# libraries installed: click, biopython, pandas
 ```
 
 ## Basic Example
@@ -55,16 +53,13 @@ create_colormaps(birddata)
 create_sizemaps(birddata)
 
 # plot the widget.
-# note that the data -> JSON converter requieres python with the following
-# libraries installed: click, biopython, pands
-# # phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
 phylotree(tree=bird.families, data=birddata)
 phylotree(tree=bird.families, data=birddata, width=500, height=500)
 ```
 
 ```{r eval=FALSE}
 phylotree(tree=bird.families, data=birddata, width=500, height=500, layout="rect", 
-          zoomLevel_x = 2, pan_x = 1, orientation_x = 2, python="/Users/zach/anaconda3/bin/python")
+          zoomLevel_x = 2, pan_x = 1, orientation_x = 2)
 ```
 
 ![](phylotree1.png)
@@ -76,7 +71,7 @@ Highlight information can be passed using the `highlight_tips` function. This us
 
 ```{r, eval=FALSE}
 
-p <- phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
+p <- phylotree(tree=bird.families, data=birddata)
 
 p %>% 
   highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
@@ -101,5 +96,4 @@ p %>%
 
 ```{r eval=FALSE}
 p %>% scale_branchthickness()
-
 ```
