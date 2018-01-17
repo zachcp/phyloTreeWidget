@@ -36,11 +36,15 @@ phylotree <- function(tree,
                       highlight_color="#FF0000",
                       highlight_size=30) {
 
-  treejson <- process_tree(tree, data, python)
+  #treejson <- process_tree(tree, data, python)
+  treejson <- process_tree_in_R('a', 'b')
 
   # named list of color HEX values
-  colors   <- create_colormaps(data)
-  sizes    <- create_sizemaps(data)
+  #colors   <- create_colormaps(data)
+  #sizes    <- create_sizemaps(data)
+
+  colors   <- NULL
+  sizes    <- NULL
 
   # forward options using x
   params = list(

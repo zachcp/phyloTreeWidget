@@ -15,23 +15,29 @@
 #'  following libraries installed: click, biopython, pandas.
 #'
 #'
-#' @importFrom ape read.tree
-#' @importFrom ape write.tree
-#' @importFrom jsonlite read_json
+#' @import data.tree
+#' @import dplyr
+#' @importFrom purrr map_chr
+#' @importFrom ape nodepath
+#' @importFrom ape makeNodeLabel
 #' @export
 process_tree_in_R <- function(tree, data, python="python") {
-  
+
   library(ape)
   library(data.tree)
   library(tidytree)
   library(dplyr)
-  
-  source("https://bioconductor.org/biocLite.R")
-  biocLite("treeio")
-  
+
+  #source("https://bioconductor.org/biocLite.R")
+  #biocLite("treeio")
+
   data(bird.families)
-  bird.families <- ape::makeNodeLabel(bird.families)
-  
+
+  # labal internal nodes
+  bird.families <- bird.families %>%
+    ape::makeNodeLabel() %>%
+    ape::ladderize()
+
   birddata <- data.frame(
     node = bird.families$tip.label,
     col1 = sample(1:5, length(bird.families$tip.label), replace=T),
@@ -40,24 +46,46 @@ process_tree_in_R <- function(tree, data, python="python") {
     col5 = c(rep("CLADE1", 40), rep("CLADE2", 40), rep("CLADE3", 40), rep("CLADE4", 17)),
     stringsAsFactors = FALSE
   )
-  
-  x <- as_data_frame(bird.families)
-  
-  x <- x %>% left_join(birddata, by=c('label'='node'))
-  
-  x$pathString <- paste("root2", x$parent, x$node, sep="/")
-  
-  treenode <- as.Node(x, mode = c("table"),
-          pathName = "pathString", pathDelimiter = "/", colLevels = NULL,
+
+
+
+  df <- as_data_frame(bird.families)
+
+  # get name of node
+  df$namedparent <- purrr::map_chr(df$parent, function(x){
+     df[df$node==x,][['label']]
+    })
+
+
+  #combine the tre data with the datframe
+  df <- df %>%
+    left_join(birddata, by=c('label'='node')) %>%
+    mutate(branch_length=branch.length) %>%
+    select(-branch.length)
+
+  # create node paths for JSON output.
+  # This requires finding the path from the root to the individual node
+  #
+  rootnode <- df[df$parent==df$node,][['node']]
+  df[df$node==rootnode,][['label']] <- 'root'
+
+  df$pathString <- purrr::map_chr(df$node, function(p) {
+    nodes      <-  ape::nodepath(bird.families, from=rootnode, to=p)
+    nodechar   <-  purrr::map_chr(nodes, function(n) {
+          df[df$node==n,][['label']]
+      })
+    paste(nodechar, collapse="/")
+  })
+
+
+  treenode <- as.Node(df, mode = c("table"),
+          pathName = "pathString", pathDelimiter = "/",
+          colLevels = NULL,
           na.rm = TRUE)
-  
-  l1 <- as.list(treenode, childrenName = "children", nameName = "node")
-  
-  ToListExplicit(treenode, unname=TRUE, childrenName = "children", nameName = "label") %>%
-    jsonlite::toJSON(auto_unbox = TRUE)
-  #%>%
-    jsonlite::unbox()
-  
-  return(treenode)
-  
+
+  treelist <- ToListExplicit(treenode, unname=TRUE, childrenName = "children", nameName = "strain")
+
+  #%>% jsonlite::toJSON(auto_unbox = TRUE)
+  return(treelist)
+
 }
