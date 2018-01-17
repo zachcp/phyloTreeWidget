@@ -10,7 +10,11 @@
 #' @importFrom ape nodepath
 #' @importFrom ape makeNodeLabel
 #' @export
-process_tree <- function(tree, data, python="python") {
+process_tree <- function(tree, data, use_python=FALSE, python="python") {
+
+  if (use_python == TRUE) {
+    return(process_tree_python(tree, data, python))
+  }
 
   # labal internal nodes and convert to dataframe
   tree <- tree %>%
@@ -37,10 +41,14 @@ process_tree <- function(tree, data, python="python") {
   rootnode <- treedf[treedf$parent==treedf$node,][['node']]
   treedf[treedf$node==rootnode,][['label']] <- 'root'
 
+  # this computation is incredibly long for big trees.
+  # I suspect that nodepath is a full tree traversal for each node.
+  # a better version mapy generate the list-of-lists via direct iteration
   treedf$pathString <- purrr::map_chr(treedf$node, function(p) {
     nodes      <-  ape::nodepath(tree, from=rootnode, to=p)
     nodechar   <-  purrr::map_chr(nodes, function(n) {
-        treedf[treedf$node==n,][['label']]
+        # note this will keep the name of the first node if there are duplicates
+        treedf[treedf$node==n,][['label']][[1]]
       })
     paste(nodechar, collapse="/")
   })

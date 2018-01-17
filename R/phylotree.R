@@ -33,9 +33,11 @@ phylotree <- function(tree,
                       height = NULL,
                       elementId = NULL,
                       highlight_color="#FF0000",
-                      highlight_size=30) {
+                      highlight_size=30,
+                      python="python",
+                      use_python=FALSE) {
 
-  treejson <- process_tree(tree, data)
+  treejson <- process_tree(tree, data, use_python=use_python, python=python)
 
   # named list of color HEX values
   colors   <- create_colormaps(data)

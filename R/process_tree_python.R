@@ -23,7 +23,7 @@
 #@export
 process_tree_python <- function(tree, data, python="python") {
 
-  stop("DEPRECATED. Will remove this once the R code has been extensiely tested")
+  warning("DEPRECATED. Will remove this once the R code has been extensiely tested")
 
   # intermediate files will be run in temp if no output is sent
   # clean up the tempdir when we are done.
