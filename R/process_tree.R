@@ -38,7 +38,7 @@ process_tree <- function(tree, data, python="python") {
   treedf[treedf$node==rootnode,][['label']] <- 'root'
 
   treedf$pathString <- purrr::map_chr(treedf$node, function(p) {
-    nodes      <-  ape::nodepath(bird.families, from=rootnode, to=p)
+    nodes      <-  ape::nodepath(tree, from=rootnode, to=p)
     nodechar   <-  purrr::map_chr(nodes, function(n) {
         treedf[treedf$node==n,][['label']]
       })
