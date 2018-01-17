@@ -5,6 +5,7 @@
 #'
 #' @import data.tree
 #' @import dplyr
+#' @import tidytree
 #' @importFrom purrr map_chr
 #' @importFrom ape nodepath
 #' @importFrom ape makeNodeLabel

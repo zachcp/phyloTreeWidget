@@ -18,5 +18,6 @@ Imports:
   data.tree,
   dplyr,
   htmltools,
-  htmlwidgets
+  htmlwidgets,
+  tidytree
   
