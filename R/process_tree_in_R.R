@@ -23,69 +23,72 @@
 #' @export
 process_tree_in_R <- function(tree, data, python="python") {
 
-  library(ape)
-  library(data.tree)
-  library(tidytree)
-  library(dplyr)
-
-  #source("https://bioconductor.org/biocLite.R")
-  #biocLite("treeio")
-
-  data(bird.families)
+  # library(ape)
+  # library(data.tree)
+  # library(tidytree)
+  # library(dplyr)
+  #
+  # #source("https://bioconductor.org/biocLite.R")
+  # #biocLite("treeio")
+  #
+  # data(bird.families)
+  #
+  # # labal internal nodes
+  # bird.families <- bird.families %>%
+  #   ape::makeNodeLabel() %>%
+  #   ape::ladderize()
+  #
+  # birddata <- data.frame(
+  #   node = bird.families$tip.label,
+  #   col1 = sample(1:5, length(bird.families$tip.label), replace=T),
+  #   col2 = sample(1:500, length(bird.families$tip.label), replace=T),
+  #   col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T),
+  #   col5 = c(rep("CLADE1", 40), rep("CLADE2", 40), rep("CLADE3", 40), rep("CLADE4", 17)),
+  #   stringsAsFactors = FALSE
+  # )
 
   # labal internal nodes
-  bird.families <- bird.families %>%
+  tree <- tree %>%
     ape::makeNodeLabel() %>%
     ape::ladderize()
 
-  birddata <- data.frame(
-    node = bird.families$tip.label,
-    col1 = sample(1:5, length(bird.families$tip.label), replace=T),
-    col2 = sample(1:500, length(bird.families$tip.label), replace=T),
-    col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T),
-    col5 = c(rep("CLADE1", 40), rep("CLADE2", 40), rep("CLADE3", 40), rep("CLADE4", 17)),
-    stringsAsFactors = FALSE
-  )
 
-
-
-  df <- as_data_frame(bird.families)
+  treedf <- as_data_frame(tree)
 
   # get name of node
-  df$namedparent <- purrr::map_chr(df$parent, function(x){
-     df[df$node==x,][['label']]
-    })
+  treedf$namedparent <- purrr::map_chr(treedf$parent, function(x) {
+    treedf[treedf$node==x,][['label']]
+  })
 
 
-  #combine the tre data with the datframe
-  df <- df %>%
-    left_join(birddata, by=c('label'='node')) %>%
+  #combine the tree data with the datframe
+  treedf <- treedf %>%
+    left_join(data, by=c('label'='node')) %>%
     mutate(branch_length=branch.length) %>%
     select(-branch.length)
 
   # create node paths for JSON output.
   # This requires finding the path from the root to the individual node
   #
-  rootnode <- df[df$parent==df$node,][['node']]
-  df[df$node==rootnode,][['label']] <- 'root'
+  rootnode <- treedf[treedf$parent==treedf$node,][['node']]
+  treedf[treedf$node==rootnode,][['label']] <- 'root'
 
-  df$pathString <- purrr::map_chr(df$node, function(p) {
+  treedf$pathString <- purrr::map_chr(treedf$node, function(p) {
     nodes      <-  ape::nodepath(bird.families, from=rootnode, to=p)
     nodechar   <-  purrr::map_chr(nodes, function(n) {
-          df[df$node==n,][['label']]
+        treedf[treedf$node==n,][['label']]
       })
     paste(nodechar, collapse="/")
   })
 
 
-  treenode <- as.Node(df, mode = c("table"),
+  treenode <- as.Node(treedf, mode = c("table"),
           pathName = "pathString", pathDelimiter = "/",
           colLevels = NULL,
           na.rm = TRUE)
 
   treelist <- ToListExplicit(treenode, unname=TRUE, childrenName = "children", nameName = "strain")
 
-  #%>% jsonlite::toJSON(auto_unbox = TRUE)
   return(treelist)
 
 }
