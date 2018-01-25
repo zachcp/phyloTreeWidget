@@ -93,6 +93,16 @@ hide_controls <- function(phytree) {
   phytree
 }
 
+#' show_controls
+#'
+#' show the controls
+#'
+#' @export
+show_controls <- function(phytree) {
+  phytree$x$controlpanel <- TRUE
+  phytree
+}
+
 #' change_tipsize
 #'
 #' change tipsize
