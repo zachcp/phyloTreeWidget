@@ -112,3 +112,19 @@ scale_branchthickness <- function(phytree, scale="linear", size=NULL) {
   phytree$x$branchThickness <- scale
   phytree
 }
+
+#' change_layout
+#'
+#' change the layout
+#'
+#' @export
+change_layout <- function(phytree, layout) {
+  valid_layouts <- c('radial', 'rect', 'unrooted', 'clock')
+  if (!layout %in% valid_layouts)
+    stop (paste("Invalid layout. Layout must be one of ", valid_layouts))
+
+  phytree$x$layout <- layout
+  phytree
+}
+
+
