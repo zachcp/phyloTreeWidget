@@ -39,7 +39,7 @@ process_tree <- function(tree, data, use_python=FALSE, python="python") {
   # This requires finding the path from the root to the individual node
   #
   rootnode <- treedf[treedf$parent==treedf$node,][['node']]
-  treedf[treedf$node==rootnode,][['label']] <- 'root'
+  treedf[treedf$node==rootnode,][['label']] <- 'root2'
 
   # this computation is incredibly long for big trees.
   # I suspect that nodepath is a full tree traversal for each node.
