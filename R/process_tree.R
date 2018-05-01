@@ -64,3 +64,37 @@ process_tree <- function(tree, data, use_python=FALSE, python="python") {
   return(treelist)
 
 }
+
+
+
+#' Create Json from a Phylobase object
+#'
+#'
+#' @importFrom phylobase children
+#' @importFrom phylobase getNode
+process_tree_R <- function(node, tree) {
+
+  treejson <- list()
+
+  nodename <- names(node)
+
+  treejson[['strain']] <- nodename
+
+  ch <- children(tree, node)
+
+  if (length(ch) > 0) {
+
+    treejson[['children']] <- list()
+
+    for (i in seq_along(ch)) {
+
+      childname <- names(ch)[i]
+      childidx  <- ch[i]
+
+      treejson[['children']] <- c(treejson[['children']],
+                                  list(create_json(getNode(tree, childidx), tree)))
+
+    }
+  }
+  return(treejson)
+}
