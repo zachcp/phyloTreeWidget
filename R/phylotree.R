@@ -37,14 +37,9 @@ phylotree <- function(tree,
                       python="python",
                       use_python=FALSE) {
 
-  # if there is no data make a single column data frame to use
-  if (is.null(data)) {
-    data = data.frame(
-      node=tree$tip.label,
-      col1 =tree$tip.label)
-  }
 
-  treejson <- process_tree(tree, data, use_python=use_python, python=python)
+  phy4d    <- coerce_to_phy4d(tree, data)
+  treejson <- serialize_tree(phy4d)
 
 
   # named list of color HEX values

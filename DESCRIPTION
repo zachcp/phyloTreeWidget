@@ -19,5 +19,6 @@ Imports:
   dplyr,
   htmltools,
   htmlwidgets,
+  phylobase,
   tidytree
 Suggests: testthat

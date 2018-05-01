@@ -13,7 +13,7 @@ test_that("tree-only widget creation works", {
   nodeLabels(g2) <- sprintf("NODE%02d", 1:nNodes(g2))
   rn      <- phylobase::rootNode(g2)
   df1     <- phylobase:::.phylo4ToDataFrame(g2)
-  Robj    <- serialize_tree(rn, g2, df1)
+  Robj    <- convert_to_json_ready(rn, g2, df1)
   #jsonlite::toJSON(Robj, auto_unbox = TRUE)
   expect_is(Robj$strain, "NODE01")
   expect_equal(length(Robj$children), 2)
