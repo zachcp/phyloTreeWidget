@@ -43,8 +43,9 @@ phylotree <- function(tree,
 
 
   # named list of color HEX values
-  colors   <- create_colormaps(data)
-  sizes    <- create_sizemaps(data)
+  phydata  <- phylobase:::.phylo4ToDataFrame(phy4d)
+  colors   <- create_colormaps(phydata)
+  sizes    <- create_sizemaps(phydata)
 
   # forward options using x
   params = list(

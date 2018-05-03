@@ -2,9 +2,10 @@
 #'
 #' Convert a phylo4d object to a nested R object that is ready for JSON serialization.
 #'
-
 #' @importFrom phylobase getNode
 #' @importFrom phylobase rootNode
+#' @importFrom phylobase nNodes
+#' @importFrom phylobase nodeLabels<-
 #' @export
 serialize_tree <- function(phy4) {
 
