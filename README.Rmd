@@ -28,40 +28,28 @@ devtools::install_github("zachcp/phyloTreeWidget")
 
 ```
 
-## Basic Example
+## Basic Examples
 
-This is a basic example which shows you how to generate a tree with data from ape.
+This is a basic example which shows you how to generate a tree with data from 
+ape & phylobase.
+
+```{r, eval=FALSE}
+library(phylotree)
+library(phylobase)
+data(geospiza)
+phylotree(tree=geospiza)
+
+```
+
+![](geospiza.png)
+
+
 
 ```{r, eval=FALSE}
 library(ape)
-library(dplyr)
-data("bird.families")
-
-# create a dataframe using the tips from the
-# bird.families tree. first column must be "node"
-birddata <- data.frame(
-  node = bird.families$tip.label,
-  col1 = sample(1:5, length(bird.families$tip.label), replace=T),
-  col2 = sample(1:500, length(bird.families$tip.label), replace=T),
-  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T),
-  col5 = c(rep("CLADE1", 40), rep("CLADE2", 40), rep("CLADE3", 40), rep("CLADE4", 17))
-)
-
-# currently colors are very simple.
-# we can imagine a few ways of passing colors/colormaps into a widget
-create_colormaps(birddata)
-create_sizemaps(birddata)
-
-# plot the widget.
-phylotree(tree=bird.families, data=birddata)
-phylotree(tree=bird.families, data=birddata, width=500, height=500)
+data(bird.families)
+phylotree(bird.families)
 ```
-
-```{r eval=FALSE}
-phylotree(tree=bird.families, data=birddata, width=500, height=500, layout="rect", 
-          zoomLevel_x = 2, pan_x = 1, orientation_x = 2)
-```
-
 ![](phylotree1.png)
 
 ## Highlighting
@@ -71,8 +59,18 @@ Highlight information can be passed using the `highlight_tips` function. This us
 
 ```{r, eval=FALSE}
 
+# create some data
+birddata <- data.frame(
+  node = bird.families$tip.label,
+  col1 = sample(1:5, length(bird.families$tip.label), replace=T),
+  col2 = sample(1:500, length(bird.families$tip.label), replace=T),
+  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T)
+)
+
+# create the widget that has the data
 p <- phylotree(tree=bird.families, data=birddata)
 
+# highlight this tips by subsetting/finding that data
 p %>% 
   highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
   highlight_tips_regex(tipregex="freg", highlight_color = "#60AA9E") %>%
