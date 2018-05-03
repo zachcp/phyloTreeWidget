@@ -14,6 +14,5 @@ test_that("tree-only widget creation works", {
   expect_setequal(names(treedata), c("strain", "label", "edge.length", "wingL",
                                   "tarsusL", "culmenL","beakD", "gonysW",
                                   "children" ))
-
 })
 
