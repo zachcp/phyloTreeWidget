@@ -7,11 +7,9 @@
 #'
 #' @export
 create_sizemaps <- function(df, custommaps=NULL) {
-  if (!names(df)[1] == "node") stop("input dataframe must have first
-                                    column labelled 'node'")
-  
+
   sizemap <- list()
-  
+
   for (col in names(df)) {
 
     if (class(df[[col]]) %in% c('integer', 'numeric')) {
@@ -20,7 +18,7 @@ create_sizemaps <- function(df, custommaps=NULL) {
       mincol  <- min(coldata)
       sizemap[[col]]  <- list(max=maxcol, min=mincol)
     }
-    
+
   }
   return(sizemap)
 }
