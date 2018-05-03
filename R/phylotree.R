@@ -38,7 +38,7 @@ phylotree <- function(tree,
                       use_python=FALSE) {
 
 
-  phy4d    <- coerce_to_phy4d(tree, data)
+  phy4d    <- phylotree:::coerce_to_phy4d(tree, data)
   treejson <- serialize_tree(phy4d)
 
 
