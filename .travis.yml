@@ -10,13 +10,20 @@ r_binary_install:
   - knitr
   - brew
   - RUnit
+  - git2r
+  - jsonlite
   - inline
   - highlight
   - formatR
   - highr
   - markdown
   - rgl
+  - stringi
   - testthat
+
+r_github_packages:
+  - hadley/devtools
+
 
 r:
   - oldrel
