@@ -1,22 +1,29 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: false
-cache: packages
+sudo: required
+
+r_binary_install:
+  - ape
+  - XML
+  - Rcpp
+  - knitr
+  - brew
+  - RUnit
+  - inline
+  - highlight
+  - formatR
+  - highr
+  - markdown
+  - rgl
+  - testthat
 
 r:
   - oldrel
   - release
 
-include:
-  matrix:
-    r: devel
-    warnings_are_errors: false
 
 after_success:
-  - |
-    Rscript \
-      --default-packages='datasets,utils,grDevices,graphics,stats,methods' \
-      -e 'covr::codecov()'
+  - Rscript  -e 'covr::codecov()'
 
 
