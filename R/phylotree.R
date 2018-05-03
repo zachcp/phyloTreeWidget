@@ -38,9 +38,8 @@ phylotree <- function(tree,
                       use_python=FALSE) {
 
 
-  phy4d    <- phylotree:::coerce_to_phy4d(tree, data)
+  phy4d    <- coerce_to_phy4d(tree, data)
   treejson <- serialize_tree(phy4d)
-
 
   # named list of color HEX values
   phydata  <- phylobase:::.phylo4ToDataFrame(phy4d)
@@ -79,6 +78,7 @@ phylotree <- function(tree,
     highlight_color = highlight_color,
     highlight_size = highlight_size
   )
+
 
   # create widget
   htmlwidgets::createWidget(

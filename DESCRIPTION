@@ -15,7 +15,6 @@ RoxygenNote: 6.0.1.9000
 Imports:
   ape,
   colormap,
-  data.tree,
   dplyr,
   htmltools,
   htmlwidgets,

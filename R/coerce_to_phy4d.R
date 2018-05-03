@@ -28,8 +28,8 @@ setMethod("coerce_to_phy4d", signature(phy="phylo4", data="NULL"), function(phy,
   tip_labels <- as.character(tipLabels(phy))
 
   data = data.frame(
-    node=tip_labels,
-    col1=tip_labels)
+    col1=tip_labels,
+    col2=tip_labels)
 
   coerce_to_phy4d(phy, data)
 })
@@ -37,7 +37,10 @@ setMethod("coerce_to_phy4d", signature(phy="phylo4", data="NULL"), function(phy,
 
 #' @export
 #' @importFrom phylobase phylo4d
+#' @importFrom phylobase tipLabels
+#'
 setMethod("coerce_to_phy4d", signature(phy="phylo4", data="data.frame"), function(phy, data) {
+
 
   phy4 <-  try(phylo4d(phy, tip.data=data))
   if (!is(phy4, "try-error")) return(phy4)

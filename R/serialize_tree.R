@@ -6,10 +6,16 @@
 #' @importFrom phylobase rootNode
 #' @importFrom phylobase nNodes
 #' @importFrom phylobase nodeLabels<-
+#' @importFrom phylobase isRooted
 #' @export
 serialize_tree <- function(phy4) {
 
   nodeLabels(phy4) <- sprintf("NODE%02d", 1:nNodes(phy4))
+
+  if (!isRooted(phy4)) {
+    stop("currently we need input trees to be rooted")
+  }
+
   rootnode         <- rootNode(phy4)
   df               <- phylobase:::.phylo4ToDataFrame(phy4)
 
