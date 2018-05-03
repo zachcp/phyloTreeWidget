@@ -22,7 +22,7 @@ serialize_tree <- function(phy4) {
 #' @importFrom dplyr filter
 #' @importFrom phylobase children
 #' @importFrom phylobase getNode
-convert_to_json_ready <- function(node, tree, dataframe, exclude_attr = c('node', 'ancestor', 'node.type')) {
+convert_to_json_ready <- function(node, tree, dataframe, exclude_attr = c('node', 'ancestor', 'node.type'), default_branch_length=0.01) {
 
   #print(dataframe)
   nodename <- names(node)
@@ -39,7 +39,22 @@ convert_to_json_ready <- function(node, tree, dataframe, exclude_attr = c('node'
   for (name in names(nodedata)) {
     if (!name %in% exclude_attr) {
       if (length(nodedata[[name]]) > 0 ) {
-        treejson[[name]] <- nodedata[[name]]
+          if (name=="edge.length") {
+            # handle branch length using phylobases' built-in edge_length
+            branch_length <- nodedata[[name]]
+
+            if (is.na(branch_length)) {
+              branch_length <- default_branch_length
+            }
+            if (branch_length < default_branch_length) {
+              branch_length <- default_branch_length
+            }
+
+            treejson['branch_length'] <- branch_length
+
+          } else {
+            treejson[[name]] <- nodedata[[name]]
+          }
       }
     }
   }
