@@ -3,6 +3,8 @@
 phylotree
 =========
 
+[![Build Status](https://travis-ci.org/zachcp/phyloTreeWidget.svg?branch=master)](https://travis-ci.org/zachcp/phyloTreeWidget)
+
 The goal of phylotree is to provide an R interface to the phyloTree JS library in order to make beautiful, interactive trees from any standard data source.
 
 \*\* NOTE: This is currently experimental and the datastructures and functions are likely to change\*\*
@@ -15,46 +17,26 @@ You can install phylotree from github with:
 ``` r
 # install.packages("devtools")
 devtools::install_github("zachcp/phyloTreeWidget")
-
-# note you will ALSO need python with the following
-# libraries installed: click, biopython, pandas
 ```
 
-Basic Example
--------------
+Basic Examples
+--------------
 
-This is a basic example which shows you how to generate a tree with data from ape.
+This is a basic example which shows you how to generate a tree with data from ape & phylobase.
+
+``` r
+library(phylotree)
+library(phylobase)
+data(geospiza)
+phylotree(tree=geospiza)
+```
+
+![](geospiza.png)
 
 ``` r
 library(ape)
-library(dplyr)
-data("bird.families")
-
-# create a dataframe using the tips from the
-# bird.families tree. first column must be "node"
-birddata <- data.frame(
-  node = bird.families$tip.label,
-  col1 = sample(1:5, length(bird.families$tip.label), replace=T),
-  col2 = sample(1:500, length(bird.families$tip.label), replace=T),
-  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T)
-)
-
-# currently colors are very simple.
-# we can imagine a few ways of passing colors/colormaps into a widget
-create_colormaps(birddata)
-create_sizemaps(birddata)
-
-# plot the widget.
-# note that the data -> JSON converter requieres python with the following
-# libraries installed: click, biopython, pands
-# # phylotree(tree=bird.families, data=birddata, python="/Users/zach/anaconda3/bin/python")
-phylotree(tree=bird.families, data=birddata)
-phylotree(tree=bird.families, data=birddata, width=500, height=500)
-```
-
-``` r
-phylotree(tree=bird.families, data=birddata, width=500, height=500, layout="rect", 
-          zoomLevel_x = 2, pan_x = 1, orientation_x = 2, python="/Users/zach/anaconda3/bin/python")
+data(bird.families)
+phylotree(bird.families)
 ```
 
 ![](phylotree1.png)
@@ -66,24 +48,39 @@ Highlight information can be passed using the `highlight_tips` function. This us
 
 ``` r
 
-p <- phylotree(tree=bird.families, data=birddata, python="/Users/zachpowers/anaconda3/bin/python")
+# create some data
+birddata <- data.frame(
+  node = bird.families$tip.label,
+  col1 = sample(1:5, length(bird.families$tip.label), replace=T),
+  col2 = sample(1:500, length(bird.families$tip.label), replace=T),
+  col4 = sample(LETTERS[1:10], length(bird.families$tip.label), replace=T)
+)
 
+# create the widget that has the data
+p <- phylotree(tree=bird.families, data=birddata)
+
+# highlight this tips by subsetting/finding that data
 p %>% 
-  highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
-  highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
-  highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
+  highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+  highlight_tips_regex(tipregex="freg", highlight_color = "#60AA9E") %>%
+  highlight_tips_regex(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5)
 ```
 
-![](phylotree_highlight.png)
-
-Hide Controls
--------------
+![](phylotree_highlight.png) \#\# Hide Controls
 
 You can hide the control panel to focus only on the tree.
 
+``` r
+p %>% 
+  highlight_tips_regex(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
+  highlight_tips_regex(tipregex="freg", highlight_color = "#60AA9E") %>%
+  highlight_tips_regex(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5) %>%
+  hide_controls()
+```
 
-    p %>% 
-      highlight_tips(tipregex="A", column = 'col4', highlight_color = "#8EBC66", highlight_size = 5) %>%
-      highlight_tips(tipregex="freg", highlight_color = "#60AA9E") %>%
-      highlight_tips(tipregex="apod", highlight_color = "#D9AD3D", highlight_size = 5) %>%
-      hide_controls()
+Scale Tree Branches
+-------------------
+
+``` r
+p %>% scale_branchthickness()
+```
