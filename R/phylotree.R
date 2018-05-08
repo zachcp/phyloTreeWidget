@@ -37,19 +37,14 @@ phylotree <- function(tree,
                       python="python",
                       use_python=FALSE) {
 
-  # if there is no data make a single column data frame to use
-  if (is.null(data)) {
-    data = data.frame(
-      node=tree$tip.label,
-      col1 =tree$tip.label)
-  }
 
-  treejson <- process_tree(tree, data, use_python=use_python, python=python)
-
+  phy4d    <- coerce_to_phy4d(tree, data)
+  treejson <- serialize_tree(phy4d)
 
   # named list of color HEX values
-  colors   <- create_colormaps(data)
-  sizes    <- create_sizemaps(data)
+  phydata  <- phylobase:::.phylo4ToDataFrame(phy4d)
+  colors   <- create_colormaps(phydata)
+  sizes    <- create_sizemaps(phydata)
 
   # forward options using x
   params = list(
@@ -83,6 +78,7 @@ phylotree <- function(tree,
     highlight_color = highlight_color,
     highlight_size = highlight_size
   )
+
 
   # create widget
   htmlwidgets::createWidget(
