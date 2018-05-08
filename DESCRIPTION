@@ -18,6 +18,7 @@ Imports:
   dplyr,
   htmltools,
   htmlwidgets,
+  methods,
   phylobase
 Suggests: 
   testthat,
