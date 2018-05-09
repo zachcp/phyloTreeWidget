@@ -5,10 +5,13 @@
 #' @param df Required. A dataframe containing information about nodes in the tree.
 #' @param custommaps. Optional. Curently a stub. There needs to be a way to pass
 #'                     in custom colors.
+#' @param exclude_attr a list of columns to exclude from the final output. The
+#'                        defaults are the otputs from phylobase
 #' @importFrom colormap colormap_pal
 #'
 #' @export
-create_colormaps <- function(df, custommaps=NULL, exclude_attr = c('node', 'ancestor', 'node.type')) {
+create_colormaps <- function(df, custommaps=NULL,
+                             exclude_attr = c('node', 'ancestor', 'node.type')) {
 
   colmap <- list()
   cols   <- names(df)[2:length((names(df)))]

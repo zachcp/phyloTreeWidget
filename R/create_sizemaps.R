@@ -4,6 +4,8 @@
 #'
 #' @param df Required. A dataframe containing infornation about nodes in the tree.
 #' @param custommaps. Optional. Curently a stub. There needs to be a way to pass in custom colors.
+#' @param exclude_attr a list of columns to exclude from the final output. The
+#'                        defaults are the otputs from phylobase
 #'
 #' @export
 create_sizemaps <- function(df, custommaps=NULL, exclude_attr = c('node', 'ancestor', 'node.type')) {
