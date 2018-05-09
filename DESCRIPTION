@@ -22,4 +22,5 @@ Imports:
   phylobase
 Suggests: 
   testthat,
+  tibble,
   tidytree
