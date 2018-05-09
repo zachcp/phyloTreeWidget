@@ -3,6 +3,8 @@
 phylotree
 =========
 
+[![Build Status](https://travis-ci.org/zachcp/phyloTreeWidget.svg?branch=master)](https://travis-ci.org/zachcp/phyloTreeWidget)
+
 The goal of phylotree is to provide an R interface to the phyloTree JS library in order to make beautiful, interactive trees from any standard data source.
 
 \*\* NOTE: This is currently experimental and the datastructures and functions are likely to change\*\*

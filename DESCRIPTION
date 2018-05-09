@@ -18,6 +18,9 @@ Imports:
   dplyr,
   htmltools,
   htmlwidgets,
-  phylobase,
+  methods,
+  phylobase
+Suggests: 
+  testthat,
+  tibble,
   tidytree
-Suggests: testthat

@@ -22,15 +22,34 @@ r_binary_install:
   - testthat
 
 r_github_packages:
-  - hadley/devtools
-
+  - jimhester/covr
 
 r:
-  - oldrel
-  - release
+  - devel
 
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      env: R_CODECOV=true
+      r_check_args: '--use-valgrind'
+    - os: osx
+      osx_image: xcode8.3
+      brew_packages: v8@3.15
+      latex: false
+
+addons:
+  apt:
+    packages:
+      - libv8-dev
+      - valgrind
+
+warnings_are_errors: true
+#r_check_revdep: true
 
 after_success:
-  - Rscript  -e 'covr::codecov()'
+  - if [[ "${R_CODECOV}" ]]; then R -e 'covr::codecov()'; fi
 
+before_install:
+  - (while true; do echo 'Ping? Pong!'; sleep 500; done) &
 
