@@ -22,4 +22,5 @@ Imports:
 Suggests:
   ape,
   testthat,
+  tibble,
   tidytree
