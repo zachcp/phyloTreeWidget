@@ -27,6 +27,7 @@ setMethod("coerce_to_phy4d", signature(phy="phylo4", data="NULL"), function(phy,
 
   tip_labels <- as.character(tipLabels(phy))
 
+
   data = data.frame(
     col1=tip_labels,
     col2=tip_labels)
@@ -40,6 +41,8 @@ setMethod("coerce_to_phy4d", signature(phy="phylo4", data="NULL"), function(phy,
 #' @importFrom phylobase tipLabels
 #'
 setMethod("coerce_to_phy4d", signature(phy="phylo4", data="data.frame"), function(phy, data) {
+
+  #tip_labels <- as.character(tipLabels(phy))
 
 
   phy4 <-  try(phylo4d(phy, tip.data=data))
