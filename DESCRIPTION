@@ -7,7 +7,7 @@ Description: Create and customize interactive phylogenetic trees using the 'phyl
     from 'RStudio', in Shiny apps, and in R Markdown documents.  See <https://github.com/nextstrain/phyloTree/>  for 
     more information on the 'phylotree' library.
 URL: https://github.com/zachcp/phyloTreeWidget, https://github.com/nextstrain/phyloTree
-License: GNU Affero General Public License v3.0
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000
