@@ -53,7 +53,3 @@ after_success:
 before_install:
   - (while true; do echo 'Ping? Pong!'; sleep 500; done) &
 
-
-
-
-
