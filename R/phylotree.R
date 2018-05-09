@@ -1,9 +1,19 @@
 #' phylotree html widget
 #'
-#' <Add Description>
+#' create an interactive phylogenetic tree.
 #'
 #' @import htmlwidgets
 #' @import htmltools
+#'
+#' @param tree (Required.)  a tree of type \code{\link[ape]{phylo}} or
+#'               \code{\link[phylobase]{phylo4}} or  \code{\link[phylobase]{phylo4d}}
+#' @param data (Required.) Either a data.frame or NULL. This contains metadata
+#'             about the tips of the tree
+#'
+#'
+#' \seealso{
+#' \href{'https://github.com/nextstrain/phyloTree'}
+#' }
 #'
 #' @export
 phylotree <- function(tree,
