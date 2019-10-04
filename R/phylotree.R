@@ -6,13 +6,14 @@
 #' @import htmltools
 #'
 #' @param tree (Required.)  a tree of type \code{\link[ape]{phylo}} or
-#'               \code{\link[phylobase]{phylo4}} or  \code{\link[phylobase]{phylo4d}}
+#'               \code{\link[phylobase]{phylo4}} or
+#'                \code{\link[phylobase]{phylo4d}}
 #' @param data (Required.) Either a data.frame or NULL. This contains metadata
 #'             about the tips of the tree
 #'
 #'
-#' \seealso{
-#' \href{'https://github.com/nextstrain/phyloTree'}
+#' @seealso{
+#'    \href{'https://github.com/nextstrain/phyloTree'}
 #' }
 #'
 #' @export
@@ -57,7 +58,7 @@ phylotree <- function(tree,
   sizes    <- create_sizemaps(phydata)
 
   # forward options using x
-  params = list(
+  params <- list(
     colors   = colors,
     sizes    = sizes,
     treejson = treejson,
@@ -119,7 +120,8 @@ phylotree <- function(tree,
 #'
 #' @export
 phylotreeOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'phylotree', width, height, package = 'phylotree')
+  htmlwidgets::shinyWidgetOutput(
+    outputId, 'phylotree', width, height, package = 'phylotree')
 }
 
 #' @rdname phylotree-shiny
